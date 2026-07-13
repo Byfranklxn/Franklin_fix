@@ -142,45 +142,6 @@
             box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
         }
 
-        .sidebar-footer {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-secundario {
-            width: 100%;
-            padding: 10px;
-            background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-gray);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .btn-secundario:hover {
-            border-color: var(--text-gray);
-            color: #fff;
-        }
-
-        .btn-apagar {
-            width: 100%;
-            padding: 10px;
-            background-color: rgba(231, 76, 60, 0.1);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            color: var(--red);
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .btn-apagar:hover {
-            background-color: var(--red);
-            color: #fff;
-        }
-
         /* CONTENIDO PRINCIPAL */
         .main-content {
             flex-grow: 1;
@@ -328,7 +289,6 @@
         .tabla-acciones {
             display: flex;
             gap: 8px;
-            justify-content: center;
         }
 
         .btn-tabla-factura {
@@ -479,7 +439,6 @@
             cursor: pointer;
         }
 
-        /* Ocultar la web al imprimir la factura */
         @media print {
             body * {
                 visibility: hidden;
@@ -522,24 +481,24 @@
 
             <div class="input-group">
                 <label><i class="fa-solid fa-mobile-retro"></i> Modelo de Celular</label>
-                <input type="text" id="modelo" required placeholder="Ej. Moto G04, Redmi Note 13">
+                <input type="text" id="modelo" required placeholder="Ej. Moto G04">
             </div>
 
             <div class="input-group">
-                <label><i class="fa-solid fa-gears"></i> Falla / Trabajo a realizar</label>
-                <input type="text" id="falla" required placeholder="Ej. Cuenta Google (FRP), Pin de carga">
+                <label><i class="fa-solid fa-gears"></i> Falla / Trabajo</label>
+                <input type="text" id="falla" required placeholder="Ej. Cuenta Google (FRP)">
             </div>
 
             <div class="input-group">
-                <label><i class="fa-solid fa-dollar-sign"></i> Precio del Trabajo ($)</label>
+                <label><i class="fa-solid fa-dollar-sign"></i> Precio ($)</label>
                 <input type="number" id="precio" required placeholder="0">
             </div>
 
             <div class="input-group">
                 <label><i class="fa-solid fa-wallet"></i> Estado de Pago</label>
                 <select id="estado-pago">
-                    <option value="Pendiente" class="opt-debe">❌ Debe (Pendiente)</option>
-                    <option value="Pagado" class="opt-pago">✅ Pagado</option>
+                    <option value="Pendiente">❌ Debe (Pendiente)</option>
+                    <option value="Pagado">✅ Pagado</option>
                 </select>
             </div>
 
@@ -547,22 +506,13 @@
                 <i class="fa-solid fa-floppy-disk"></i> GUARDAR EN SISTEMA
             </button>
         </form>
-
-        <div class="sidebar-footer">
-            <button id="btn-exportar" class="btn-secundario" title="Guardar copia de seguridad">
-                <i class="fa-solid fa-download"></i> Respaldar Datos
-            </button>
-            <button id="btn-apagar" class="btn-apagar">
-                <i class="fa-solid fa-power-off"></i> Apagar Sistema
-            </button>
-        </div>
     </div>
 
     <div class="main-content">
         <div class="top-bar">
             <div class="titulo-seccion">
                 <h1><i class="fa-solid fa-chart-line"></i> Dashboard de Clientes</h1>
-                <p>Monitoreo de ingresos y cuentas pendientes en tiempo real</p>
+                <p>Monitoreo de ingresos y cuentas del taller</p>
             </div>
             
             <div class="stats-container">
@@ -576,7 +526,7 @@
                 <div class="stat-card caja">
                     <div class="stat-icon"><i class="fa-solid fa-sack-dollar"></i></div>
                     <div class="stat-info">
-                        <span class="stat-label">Caja Estimada (Hoy)</span>
+                        <span class="stat-label">Caja Estimada</span>
                         <h3 id="caja-total">$0</h3>
                     </div>
                 </div>
@@ -593,7 +543,7 @@
                         <th>Trabajo / Falla</th>
                         <th>Presupuesto</th>
                         <th>Estado de Pago</th>
-                        <th style="text-align: center;">Acciones</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="lista-clientes-body">
@@ -615,4 +565,180 @@
                 <div class="ticket-info">
                     <p><strong>Fecha:</strong> <span id="factura-fecha">--/--/----</span></p>
                     <p><strong>Ticket N°:</strong> <span id="factura-id">0000</span></p>
-                    <p>
+                    <p><strong>Cliente:</strong> <span id="factura-cliente">---</span></p>
+                    <p><strong>Celular:</strong> <span id="factura-tel">---</span></p>
+                </div>
+                
+                <div class="linea-decorativa"></div>
+                
+                <table class="ticket-tabla">
+                    <thead>
+                        <tr>
+                            <th>Detalle / Equipo</th>
+                            <th style="text-align: right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span id="factura-modelo" style="font-weight: bold; display: block;">---</span>
+                                <span id="factura-falla" style="font-size: 11px; color: #555;">---</span>
+                            </td>
+                            <td style="text-align: right; font-weight: bold;" id="factura-total">$0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="linea-decorativa"></div>
+                
+                <div class="ticket-footer">
+                    <p class="estado-ticket-pago" id="factura-estado">ESTADO: PENDIENTE</p>
+                    <p class="agradecimiento">¡Gracias por confiar en Franklin Fix!</p>
+                    <p class="garantia">Garantía por software: 15 días.</p>
+                </div>
+            </div>
+            
+            <div class="modal-botones">
+                <button onclick="descargarPDF()" class="btn-imprimir">Imprimir / Guardar PDF</button>
+                <button onclick="cerrarModal()" class="btn-cerrar">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarTabla();
+        });
+
+        const formCliente = document.getElementById('form-cliente');
+        const listaClientesBody = document.getElementById('lista-clientes-body');
+        const modalFactura = document.getElementById('modal-factura');
+
+        formCliente.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value || 'Sin número';
+            const modelo = document.getElementById('modelo').value;
+            const falla = document.getElementById('falla').value;
+            const precio = parseFloat(document.getElementById('precio').value) || 0;
+            const estadoPago = document.getElementById('estado-pago').value;
+
+            const nuevoCliente = {
+                id: Date.now(),
+                nombre,
+                telefono,
+                modelo,
+                falla,
+                precio,
+                estadoPago,
+                fecha: new Date().toLocaleDateString('es-CO')
+            };
+
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            clientes.push(nuevoCliente);
+            localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
+
+            formCliente.reset();
+            actualizarTabla();
+        });
+
+        function actualizarTabla() {
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            listaClientesBody.innerHTML = '';
+            
+            let deudores = 0;
+            let totalCaja = 0;
+
+            clientes.forEach(cliente => {
+                if (cliente.estadoPago === 'Pendiente') {
+                    deudores++;
+                } else {
+                    totalCaja += cliente.precio;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${cliente.nombre}</strong></td>
+                    <td><a href="https://wa.me/${cliente.telefono.replace(/\s+/g, '')}" target="_blank" style="color:#2ecc71; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> ${cliente.telefono}</a></td>
+                    <td><i class="fa-solid fa-mobile-retro" style="color:#00f2fe;"></i> ${cliente.modelo}</td>
+                    <td>${cliente.falla}</td>
+                    <td><strong>$${cliente.precio.toLocaleString('es-CO')}</strong></td>
+                    <td>
+                        <span class="badge-pago ${cliente.estadoPago.toLowerCase()}" onclick="cambiarEstado(${cliente.id})">
+                            ${cliente.estadoPago === 'Pagado' ? '✅ PAGADO' : '❌ DEBE'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="tabla-acciones">
+                            <button class="btn-tabla-factura" onclick="generarFactura(${cliente.id})">Recibo</button>
+                            <button class="btn-tabla-eliminar" onclick="eliminarCliente(${cliente.id})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                listaClientesBody.appendChild(tr);
+            });
+
+            document.getElementById('num-deudores').innerText = deudores;
+            document.getElementById('caja-total').innerText = '$' + totalCaja.toLocaleString('es-CO');
+        }
+
+        function cambiarEstado(id) {
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            clientes = clientes.map(c => {
+                if (c.id === id) {
+                    c.estadoPago = c.estadoPago === 'Pagado' ? 'Pendiente' : 'Pagado';
+                }
+                return c;
+            });
+            localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
+            actualizarTabla();
+        }
+
+        function eliminarCliente(id) {
+            if (confirm('¿Quieres eliminar este registro?')) {
+                let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+                clientes = clientes.filter(c => c.id !== id);
+                localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
+                actualizarTabla();
+            }
+        }
+
+        function generarFactura(id) {
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            const cliente = clientes.find(c => c.id === id);
+
+            if (cliente) {
+                document.getElementById('factura-fecha').innerText = cliente.fecha;
+                document.getElementById('factura-id').innerText = String(cliente.id).slice(-4);
+                document.getElementById('factura-cliente').innerText = cliente.nombre;
+                document.getElementById('factura-tel').innerText = cliente.telefono;
+                document.getElementById('factura-modelo').innerText = cliente.modelo;
+                document.getElementById('factura-falla').innerText = cliente.falla;
+                document.getElementById('factura-total').innerText = '$' + cliente.precio.toLocaleString('es-CO');
+                
+                const estFact = document.getElementById('factura-estado');
+                if (cliente.estadoPago === 'Pagado') {
+                    estFact.innerText = "ESTADO: PAGADO";
+                    estFact.style.color = '#2ecc71';
+                } else {
+                    estFact.innerText = "ESTADO: DEBE";
+                    estFact.style.color = '#e74c3c';
+                }
+
+                modalFactura.style.display = 'flex';
+            }
+        }
+
+        function cerrarModal() {
+            modalFactura.style.display = 'none';
+        }
+
+        function descargarPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
