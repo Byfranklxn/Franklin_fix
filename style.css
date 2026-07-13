@@ -1,0 +1,487 @@
+:root {
+    --bg-dark: #09090b;
+    --bg-card: #121215;
+    --bg-input: #1c1c21;
+    --cyan: #00f2fe;
+    --blue: #4facfe;
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --text-white: #f4f4f7;
+    --text-gray: #8a8a93;
+    --border: #27272a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* BARRA LATERAL */
+.sidebar {
+    width: 340px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.logo-text h2 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.logo-text h2 span {
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.logo-text p {
+    font-size: 11px;
+    color: var(--text-gray);
+    text-transform: uppercase;
+}
+
+form h3 {
+    font-size: 12px;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-group {
+    margin-bottom: 14px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-gray);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus, .input-group select:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.2);
+}
+
+.btn-agregar {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #000;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+}
+
+.btn-agregar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-secundario {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-gray);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-secundario:hover {
+    border-color: var(--text-gray);
+    color: #fff;
+}
+
+.btn-apagar {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: var(--red);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.btn-apagar:hover {
+    background-color: var(--red);
+    color: #fff;
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titulo-seccion h1 {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.titulo-seccion p {
+    font-size: 13px;
+    color: var(--text-gray);
+}
+
+.stats-container {
+    display: flex;
+    gap: 15px;
+}
+
+.stat-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 200px;
+}
+
+.stat-card.deudores .stat-icon {
+    color: var(--red);
+    background-color: rgba(231, 76, 60, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-card.caja .stat-icon {
+    color: var(--green);
+    background-color: rgba(46, 204, 113, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-gray);
+    display: block;
+}
+
+.stat-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* TABLA DE CLIENTES */
+.tabla-contenedor {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 13.5px;
+}
+
+th {
+    background-color: #16161c;
+    color: var(--text-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+tr {
+    border-bottom: 1px solid var(--border);
+    transition: 0.2s;
+}
+
+tr:hover {
+    background-color: #16161c;
+}
+
+/* Botón estado de pago estilo neón */
+.badge-pago {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.badge-pago.pendiente {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--red);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.15);
+}
+
+.badge-pago.pagado {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: var(--green);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.15);
+}
+
+.badge-pago:hover {
+    transform: scale(1.05);
+}
+
+/* Acciones en Tabla */
+.tabla-acciones {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-tabla-factura {
+    background-color: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: var(--cyan);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-tabla-factura:hover {
+    background-color: var(--cyan);
+    color: #000;
+}
+
+.btn-tabla-eliminar {
+    background-color: transparent;
+    border: none;
+    color: var(--text-gray);
+    cursor: pointer;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.btn-tabla-eliminar:hover {
+    color: var(--red);
+}
+
+/* VENTANA MODAL (FACTURA) */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    color: #000;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Estilo ticket de caja térmico */
+.ticket {
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+}
+
+.ticket-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.ticket-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.ticket-header p {
+    font-size: 12px;
+}
+
+.ticket-sub {
+    font-size: 10px !important;
+    color: #444;
+}
+
+.linea-decorativa {
+    border-top: 1px dashed #000;
+    margin: 10px 0;
+}
+
+.ticket-info p {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.ticket-tabla {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.ticket-tabla th, .ticket-tabla td {
+    color: #000 !important;
+    padding: 6px 0;
+    font-size: 12px;
+    background: none !important;
+}
+
+.ticket-footer {
+    text-align: center;
+    font-size: 11px;
+    margin-top: 15px;
+}
+
+.estado-ticket-pago {
+    font-size: 14px !important;
+    font-weight: 900;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    padding: 5px;
+    display: inline-block;
+}
+
+.garantia {
+    font-size: 9px !important;
+    color: #555;
+    margin-top: 5px;
+}
+
+.modal-botones {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-imprimir {
+    flex-grow: 1;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-cerrar {
+    padding: 10px 15px;
+    background-color: #e0e0e0;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Ocultar elementos de la web cuando se vaya a imprimir */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #ticket-imprimir, #ticket-imprimir * {
+        visibility: visible;
+    }
+    #ticket-imprimir {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
