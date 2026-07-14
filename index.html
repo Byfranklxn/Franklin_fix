@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Franklin Fix - Panel de Control</title>
+    <title>Franklin Fix - Panel de Control Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -15,7 +15,7 @@
             --blue: #4facfe;
             --green: #2ecc71;
             --red: #e74c3c;
-            --orange: #f39c12; /* Nuevo color para el modo edición */
+            --orange: #f39c12;
             --text-white: #f4f4f7;
             --text-gray: #8a8a93;
             --border: #27272a;
@@ -38,20 +38,21 @@
 
         /* BARRA LATERAL */
         .sidebar {
-            width: 340px;
+            width: 350px;
             background-color: var(--bg-card);
             border-right: 1px solid var(--border);
-            padding: 30px 20px;
+            padding: 25px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow-y: auto;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .logo-icon {
@@ -95,13 +96,12 @@
             transition: color 0.3s ease;
         }
 
-        /* Indicador visual cuando estás editando */
         form.editando h3 {
             color: var(--orange);
         }
 
         .input-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .input-group label {
@@ -114,7 +114,7 @@
 
         .input-group input, .input-group select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 9px 12px;
             background-color: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -136,7 +136,7 @@
 
         .btn-agregar {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
             color: #000;
             font-weight: 700;
@@ -145,7 +145,7 @@
             cursor: pointer;
             font-size: 13px;
             transition: 0.3s;
-            margin-top: 10px;
+            margin-top: 5px;
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
         }
 
@@ -154,15 +154,41 @@
             box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
         }
 
-        /* Estilo del botón al estar editando */
         .btn-agregar.btn-editando {
             background: linear-gradient(135deg, var(--orange), #e67e22);
             color: #fff;
             box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);
         }
 
-        .btn-agregar.btn-editando:hover {
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        /* BOTONES DE BACKUP */
+        .backup-container {
+            margin-top: 20px;
+            border-top: 1px dashed var(--border);
+            padding-top: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-backup {
+            flex: 1;
+            padding: 8px;
+            background-color: #16161c;
+            border: 1px solid var(--border);
+            color: var(--text-gray);
+            font-size: 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-backup:hover {
+            color: #fff;
+            border-color: var(--cyan);
+            background-color: rgba(0, 242, 254, 0.05);
         }
 
         /* CONTENIDO PRINCIPAL */
@@ -172,13 +198,15 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .titulo-seccion h1 {
@@ -199,47 +227,79 @@
         .stat-card {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 15px;
-            min-width: 200px;
+            min-width: 180px;
         }
 
         .stat-card.deudores .stat-icon {
             color: var(--red);
             background-color: rgba(231, 76, 60, 0.1);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .stat-card.caja .stat-icon {
             color: var(--green);
             background-color: rgba(46, 204, 113, 0.1);
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .stat-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-gray);
             display: block;
         }
 
         .stat-info h3 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
+        }
+
+        /* BUSCADOR */
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 14px;
         }
 
         /* TABLA DE CLIENTES */
@@ -256,9 +316,9 @@
         }
 
         th, td {
-            padding: 14px 16px;
+            padding: 12px 15px;
             text-align: left;
-            font-size: 13.5px;
+            font-size: 13px;
         }
 
         th {
@@ -279,11 +339,33 @@
             background-color: #16161c;
         }
 
+        /* Mini etiquetas informativas */
+        .mini-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .tag-tool {
+            background-color: rgba(0, 242, 254, 0.1);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .tag-clave {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--orange);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+        }
+
         /* Estados de pago */
         .badge-pago {
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             cursor: pointer;
             display: inline-block;
@@ -294,25 +376,19 @@
             background-color: rgba(231, 76, 60, 0.1);
             color: var(--red);
             border: 1px solid rgba(231, 76, 60, 0.3);
-            box-shadow: 0 0 10px rgba(231, 76, 60, 0.15);
         }
 
         .badge-pago.pagado {
             background-color: rgba(46, 204, 113, 0.1);
             color: var(--green);
             border: 1px solid rgba(46, 204, 113, 0.3);
-            box-shadow: 0 0 10px rgba(46, 204, 113, 0.15);
-        }
-
-        .badge-pago:hover {
-            transform: scale(1.05);
         }
 
         /* Acciones */
         .tabla-acciones {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-tabla-factura {
@@ -322,7 +398,7 @@
             padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
 
@@ -331,7 +407,25 @@
             color: #000;
         }
 
-        /* Estilo Botón Editar en Tabla */
+        .btn-tabla-whatsapp {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            color: var(--green);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-tabla-whatsapp:hover {
+            background-color: var(--green);
+            color: #000;
+        }
+
         .btn-tabla-editar {
             background-color: rgba(243, 156, 18, 0.1);
             border: 1px solid rgba(243, 156, 18, 0.3);
@@ -339,7 +433,7 @@
             padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
 
@@ -354,7 +448,7 @@
             color: var(--text-gray);
             cursor: pointer;
             padding: 6px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .btn-tabla-eliminar:hover {
@@ -385,7 +479,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Estilo recibo térmico */
         .ticket {
             font-family: 'Courier New', Courier, monospace;
             color: #000;
@@ -417,7 +510,7 @@
         }
 
         .ticket-info p {
-            font-size: 12px;
+            font-size: 11px;
             margin-bottom: 4px;
         }
 
@@ -429,7 +522,7 @@
         .ticket-tabla th, .ticket-tabla td {
             color: #000 !important;
             padding: 6px 0;
-            font-size: 12px;
+            font-size: 11px;
             background: none !important;
         }
 
@@ -440,7 +533,7 @@
         }
 
         .estado-ticket-pago {
-            font-size: 14px !important;
+            font-size: 13px !important;
             font-weight: 900;
             margin-bottom: 10px;
             border: 1px solid #000;
@@ -499,56 +592,87 @@
 <body>
 
     <div class="sidebar">
-        <div class="logo">
-            <div class="logo-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-            <div class="logo-text">
-                <h2>FRANKLIN <span>FIX</span></h2>
-                <p>Soporte Técnico & Software</p>
+        <div>
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <div class="logo-text">
+                    <h2>FRANKLIN <span>FIX</span></h2>
+                    <p>Soporte Técnico & Software</p>
+                </div>
             </div>
-        </div>
-        
-        <form id="form-cliente">
-            <input type="hidden" id="cliente-id-edicion" value="">
-
-            <h3 id="form-titulo"><i class="fa-solid fa-circle-plus"></i> REGISTRAR EQUIPO</h3>
             
-            <div class="input-group">
-                <label><i class="fa-solid fa-user"></i> Nombre del Cliente</label>
-                <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
-            </div>
+            <form id="form-cliente">
+                <input type="hidden" id="cliente-id-edicion" value="">
 
-            <div class="input-group">
-                <label><i class="fa-solid fa-phone"></i> WhatsApp</label>
-                <input type="text" id="telefono" placeholder="Ej. 312 456 7890">
-            </div>
+                <h3 id="form-titulo"><i class="fa-solid fa-circle-plus"></i> REGISTRAR EQUIPO</h3>
+                
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user"></i> Nombre del Cliente</label>
+                    <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                </div>
 
-            <div class="input-group">
-                <label><i class="fa-solid fa-mobile-retro"></i> Modelo de Celular</label>
-                <input type="text" id="modelo" required placeholder="Ej. Moto G04">
-            </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-phone"></i> WhatsApp</label>
+                    <input type="text" id="telefono" placeholder="Ej. 312 456 7890">
+                </div>
 
-            <div class="input-group">
-                <label><i class="fa-solid fa-gears"></i> Falla / Trabajo</label>
-                <input type="text" id="falla" required placeholder="Ej. Cuenta Google (FRP)">
-            </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-mobile-retro"></i> Modelo de Celular</label>
+                    <input type="text" id="modelo" required placeholder="Ej. Moto G04">
+                </div>
 
-            <div class="input-group">
-                <label><i class="fa-solid fa-dollar-sign"></i> Precio ($)</label>
-                <input type="number" id="precio" required placeholder="0">
-            </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-gears"></i> Falla / Trabajo</label>
+                    <input type="text" id="falla" required placeholder="Ej. Cuenta Google (FRP)">
+                </div>
 
-            <div class="input-group">
-                <label><i class="fa-solid fa-wallet"></i> Estado de Pago</label>
-                <select id="estado-pago">
-                    <option value="Pendiente">❌ Debe (Pendiente)</option>
-                    <option value="Pagado">✅ Pagado</option>
-                </select>
-            </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-screwdriver-wrench"></i> Herramienta / Box</label>
+                    <input type="text" id="herramienta" list="tools-comunes" placeholder="Ej. UnlockTool, TSM Pro...">
+                    <datalist id="tools-comunes">
+                        <option value="UnlockTool">
+                        <option value="TSM Pro">
+                        <option value="GSM Shield">
+                        <option value="F64 Box">
+                        <option value="Chimera">
+                        <option value="Pandora Box">
+                    </datalist>
+                </div>
 
-            <button type="submit" id="btn-submit" class="btn-agregar">
-                <i class="fa-solid fa-floppy-disk"></i> GUARDAR EN SISTEMA
+                <div class="input-group">
+                    <label><i class="fa-solid fa-key"></i> Clave / Patrón de Pantalla</label>
+                    <input type="text" id="clave" placeholder="Ej. L invertida, 1234">
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fa-solid fa-dollar-sign"></i> Precio ($)</label>
+                    <input type="number" id="precio" required placeholder="0">
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fa-solid fa-wallet"></i> Estado de Pago</label>
+                    <select id="estado-pago">
+                        <option value="Pendiente">❌ Debe (Pendiente)</option>
+                        <option value="Pagado">✅ Pagado</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn-agregar">
+                    <i class="fa-solid fa-floppy-disk"></i> GUARDAR EN SISTEMA
+                </button>
+            </form>
+        </div>
+
+        <!-- SECCIÓN DE BACKUP -->
+        <div class="backup-container">
+            <button onclick="exportarBackup()" class="btn-backup" title="Exportar Backup">
+                <i class="fa-solid fa-download"></i> Guardar Copia
             </button>
-        </form>
+            <button onclick="document.getElementById('import-file').click()" class="btn-backup" title="Cargar Backup">
+                <i class="fa-solid fa-upload"></i> Subir Copia
+            </button>
+            <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importarBackup(event)">
+        </div>
     </div>
 
     <div class="main-content">
@@ -576,6 +700,12 @@
             </div>
         </div>
 
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="buscador" onkeyup="filtrarTabla()" placeholder="Buscar cliente, modelo, herramienta o falla...">
+        </div>
+
         <div class="tabla-contenedor">
             <table id="tabla-clientes">
                 <thead>
@@ -583,7 +713,7 @@
                         <th>Cliente</th>
                         <th>WhatsApp</th>
                         <th>Modelo / Equipo</th>
-                        <th>Trabajo / Falla</th>
+                        <th>Trabajo / Proceso</th>
                         <th>Presupuesto</th>
                         <th>Estado de Pago</th>
                         <th>Acciones</th>
@@ -595,6 +725,7 @@
         </div>
     </div>
 
+    <!-- MODAL RECIBO -->
     <div id="modal-factura" class="modal">
         <div class="modal-content">
             <div class="ticket" id="ticket-imprimir">
@@ -626,6 +757,7 @@
                             <td>
                                 <span id="factura-modelo" style="font-weight: bold; display: block;">---</span>
                                 <span id="factura-falla" style="font-size: 11px; color: #555;">---</span>
+                                <span id="factura-detalles-extra" style="font-size: 10px; color: #777; display: block; margin-top: 2px;"></span>
                             </td>
                             <td style="text-align: right; font-weight: bold;" id="factura-total">$0</td>
                         </tr>
@@ -668,13 +800,15 @@
             const telefono = document.getElementById('telefono').value || 'Sin número';
             const modelo = document.getElementById('modelo').value;
             const falla = document.getElementById('falla').value;
+            const herramienta = document.getElementById('herramienta').value || '';
+            const clave = document.getElementById('clave').value || '';
             const precio = parseFloat(document.getElementById('precio').value) || 0;
             const estadoPago = document.getElementById('estado-pago').value;
 
             let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
 
             if (idEdicion) {
-                // MODO EDICIÓN: Buscamos el cliente con ese id y actualizamos sus datos
+                // Modo Edición
                 clientes = clientes.map(cliente => {
                     if (cliente.id === parseInt(idEdicion)) {
                         return {
@@ -683,23 +817,25 @@
                             telefono,
                             modelo,
                             falla,
+                            herramienta,
+                            clave,
                             precio,
                             estadoPago
                         };
                     }
                     return cliente;
                 });
-                
-                // Reiniciar formulario al estado de registro
                 cancelarEdicion();
             } else {
-                // MODO CREACIÓN NUEVO: Agregamos el registro de cero
+                // Registro Nuevo
                 const nuevoCliente = {
                     id: Date.now(),
                     nombre,
                     telefono,
                     modelo,
                     falla,
+                    herramienta,
+                    clave,
                     precio,
                     estadoPago,
                     fecha: new Date().toLocaleDateString('es-CO')
@@ -726,12 +862,22 @@
                     totalCaja += cliente.precio;
                 }
 
+                // Generación de etiquetas opcionales
+                let tagToolHtml = cliente.herramienta ? `<span class="mini-tag tag-tool"><i class="fa-solid fa-screwdriver-wrench"></i> ${cliente.herramienta}</span>` : '';
+                let tagClaveHtml = cliente.clave ? `<span class="mini-tag tag-clave"><i class="fa-solid fa-key"></i> ${cliente.clave}</span>` : '';
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${cliente.nombre}</strong></td>
                     <td><a href="https://wa.me/${cliente.telefono.replace(/\s+/g, '')}" target="_blank" style="color:#2ecc71; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> ${cliente.telefono}</a></td>
-                    <td><i class="fa-solid fa-mobile-retro" style="color:#00f2fe;"></i> ${cliente.modelo}</td>
-                    <td>${cliente.falla}</td>
+                    <td>
+                        <i class="fa-solid fa-mobile-retro" style="color:#00f2fe;"></i> <strong>${cliente.modelo}</strong>
+                        <br>${tagClaveHtml}
+                    </td>
+                    <td>
+                        ${cliente.falla}
+                        <br>${tagToolHtml}
+                    </td>
                     <td><strong>$${cliente.precio.toLocaleString('es-CO')}</strong></td>
                     <td>
                         <span class="badge-pago ${cliente.estadoPago.toLowerCase()}" onclick="cambiarEstado(${cliente.id})">
@@ -740,9 +886,10 @@
                     </td>
                     <td>
                         <div class="tabla-acciones">
-                            <button class="btn-tabla-factura" onclick="generarFactura(${cliente.id})">Recibo</button>
-                            <button class="btn-tabla-editar" onclick="cargarEdicion(${cliente.id})">📝 Editar</button>
-                            <button class="btn-tabla-eliminar" onclick="eliminarCliente(${cliente.id})">
+                            <button class="btn-tabla-factura" onclick="generarFactura(${cliente.id})" title="Ver Recibo"><i class="fa-solid fa-receipt"></i></button>
+                            <button class="btn-tabla-whatsapp" onclick="enviarMensajeWhatsApp(${cliente.id})" title="Enviar WhatsApp"><i class="fa-brands fa-whatsapp"></i> Listo</button>
+                            <button class="btn-tabla-editar" onclick="cargarEdicion(${cliente.id})" title="Editar">📝</button>
+                            <button class="btn-tabla-eliminar" onclick="eliminarCliente(${cliente.id})" title="Eliminar">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -755,35 +902,73 @@
             document.getElementById('caja-total').innerText = '$' + totalCaja.toLocaleString('es-CO');
         }
 
-        // CARGAR LOS DATOS EN LA BARRA LATERAL PARA EDITAR
+        // BUSCADOR EN TIEMPO REAL
+        function filtrarTabla() {
+            const query = document.getElementById('buscador').value.toLowerCase();
+            const filas = listaClientesBody.getElementsByTagName('tr');
+
+            for (let i = 0; i < filas.length; i++) {
+                const textoFila = filas[i].textContent.toLowerCase();
+                if (textoFila.includes(query)) {
+                    filas[i].style.display = '';
+                } else {
+                    filas[i].style.display = 'none';
+                }
+            }
+        }
+
+        // ENVIAR MENSAJE PERSONALIZADO DE WHATSAPP
+        function enviarMensajeWhatsApp(id) {
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            const cliente = clientes.find(c => c.id === id);
+
+            if (cliente) {
+                if (cliente.telefono === 'Sin número' || !cliente.telefono) {
+                    alert('Este cliente no tiene un número registrado.');
+                    return;
+                }
+
+                // Limpiar número
+                const numeroLimpio = cliente.telefono.replace(/\D/g, '');
+                const prefijo = numeroLimpio.startsWith('57') ? '' : '57'; // Agregar código de Colombia si no está
+                
+                let mensaje = '';
+                if (cliente.estadoPago === 'Pagado') {
+                    mensaje = `Hola *${cliente.nombre}*, ¡te habla Franklin de *Franklin Fix*! 👋 Te informo que tu *${cliente.modelo}* ya está listo para retirar. El trabajo de *${cliente.falla}* fue completado con éxito y el saldo está cubierto. ¡Te espero! 🛠️📱`;
+                } else {
+                    mensaje = `Hola *${cliente.nombre}*, ¡te habla Franklin de *Franklin Fix*! 👋 Te informo que tu *${cliente.modelo}* ya está listo por concepto de *${cliente.falla}*. El valor restante es de *$${cliente.precio.toLocaleString('es-CO')}*. ¡Puedes pasar a recogerlo cuando quieras! 🛠️📱`;
+                }
+
+                const url = `https://wa.me/${prefijo}${numeroLimpio}?text=${encodeURIComponent(mensaje)}`;
+                window.open(url, '_blank');
+            }
+        }
+
+        // EDICIÓN
         function cargarEdicion(id) {
             let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
             const cliente = clientes.find(c => c.id === id);
 
             if (cliente) {
-                // Colocamos el ID en el input oculto para saber que estamos editando
                 idEdicionInput.value = cliente.id;
-
-                // Rellenamos los campos con los datos guardados
                 document.getElementById('nombre').value = cliente.nombre;
                 document.getElementById('telefono').value = cliente.telefono === 'Sin número' ? '' : cliente.telefono;
                 document.getElementById('modelo').value = cliente.modelo;
                 document.getElementById('falla').value = cliente.falla;
+                document.getElementById('herramienta').value = cliente.herramienta || '';
+                document.getElementById('clave').value = cliente.clave || '';
                 document.getElementById('precio').value = cliente.precio;
                 document.getElementById('estado-pago').value = cliente.estadoPago;
 
-                // Cambiamos el estilo del formulario
                 formCliente.classList.add('editando');
-                formTitulo.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> EDITANDO CLIENTE`;
+                formTitulo.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> EDITANDO REGISTRO`;
                 btnSubmit.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i> ACTUALIZAR DATOS`;
                 btnSubmit.classList.add('btn-editando');
 
-                // Hacemos scroll suave al formulario si la pantalla es de teléfono
                 formCliente.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // RESTABLECER FORMULARIO A MODO DE REGISTRO
         function cancelarEdicion() {
             idEdicionInput.value = '';
             formCliente.classList.remove('editando');
@@ -806,7 +991,6 @@
 
         function eliminarCliente(id) {
             if (confirm('¿Quieres eliminar este registro?')) {
-                // Si justo estábamos editando este cliente, cancelamos la edición
                 if (idEdicionInput.value === String(id)) {
                     cancelarEdicion();
                     formCliente.reset();
@@ -818,6 +1002,48 @@
             }
         }
 
+        // RESPALDOS / BACKUP
+        function exportarBackup() {
+            const clientes = localStorage.getItem('franklin_clientes');
+            if (!clientes || clientes === "[]") {
+                alert("No hay datos en el sistema para respaldar.");
+                return;
+            }
+            const blob = new Blob([clientes], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Franklin_Fix_Backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importarBackup(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                try {
+                    const datos = JSON.parse(e.target.result);
+                    if (Array.isArray(datos)) {
+                        if (confirm("Se van a restaurar los clientes importados. ¿Deseas continuar?")) {
+                            localStorage.setItem('franklin_clientes', JSON.stringify(datos));
+                            actualizarTabla();
+                            alert("Base de datos de Franklin Fix restaurada con éxito.");
+                        }
+                    } else {
+                        alert("El archivo no contiene un formato de copia de seguridad válido.");
+                    }
+                } catch (error) {
+                    alert("Error al leer el archivo. Asegúrate de que sea el archivo .json correcto.");
+                }
+            };
+            lector.readAsText(archivo);
+            event.target.value = ''; // Reset file input
+        }
+
+        // GENERAR FACTURA
         function generarFactura(id) {
             let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
             const cliente = clientes.find(c => c.id === id);
@@ -831,6 +1057,11 @@
                 document.getElementById('factura-falla').innerText = cliente.falla;
                 document.getElementById('factura-total').innerText = '$' + cliente.precio.toLocaleString('es-CO');
                 
+                let extraInfo = '';
+                if(cliente.clave) extraInfo += `Clave: ${cliente.clave} `;
+                if(cliente.herramienta) extraInfo += `| Herramienta: ${cliente.herramienta}`;
+                document.getElementById('factura-detalles-extra').innerText = extraInfo;
+
                 const estFact = document.getElementById('factura-estado');
                 if (cliente.estadoPago === 'Pagado') {
                     estFact.innerText = "ESTADO: PAGADO";
