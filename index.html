@@ -15,6 +15,7 @@
             --blue: #4facfe;
             --green: #2ecc71;
             --red: #e74c3c;
+            --orange: #f39c12; /* Nuevo color para el modo edición */
             --text-white: #f4f4f7;
             --text-gray: #8a8a93;
             --border: #27272a;
@@ -91,6 +92,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        /* Indicador visual cuando estás editando */
+        form.editando h3 {
+            color: var(--orange);
         }
 
         .input-group {
@@ -122,6 +129,11 @@
             box-shadow: 0 0 8px rgba(0, 242, 254, 0.2);
         }
 
+        form.editando .input-group input:focus, form.editando .input-group select:focus {
+            border-color: var(--orange);
+            box-shadow: 0 0 8px rgba(243, 156, 18, 0.2);
+        }
+
         .btn-agregar {
             width: 100%;
             padding: 12px;
@@ -140,6 +152,17 @@
         .btn-agregar:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Estilo del botón al estar editando */
+        .btn-agregar.btn-editando {
+            background: linear-gradient(135deg, var(--orange), #e67e22);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn-agregar.btn-editando:hover {
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
         }
 
         /* CONTENIDO PRINCIPAL */
@@ -288,6 +311,7 @@
         /* Acciones */
         .tabla-acciones {
             display: flex;
+            align-items: center;
             gap: 8px;
         }
 
@@ -304,6 +328,23 @@
 
         .btn-tabla-factura:hover {
             background-color: var(--cyan);
+            color: #000;
+        }
+
+        /* Estilo Botón Editar en Tabla */
+        .btn-tabla-editar {
+            background-color: rgba(243, 156, 18, 0.1);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            color: var(--orange);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-tabla-editar:hover {
+            background-color: var(--orange);
             color: #000;
         }
 
@@ -467,7 +508,9 @@
         </div>
         
         <form id="form-cliente">
-            <h3><i class="fa-solid fa-circle-plus"></i> REGISTRAR EQUIPO</h3>
+            <input type="hidden" id="cliente-id-edicion" value="">
+
+            <h3 id="form-titulo"><i class="fa-solid fa-circle-plus"></i> REGISTRAR EQUIPO</h3>
             
             <div class="input-group">
                 <label><i class="fa-solid fa-user"></i> Nombre del Cliente</label>
@@ -502,7 +545,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn-agregar">
+            <button type="submit" id="btn-submit" class="btn-agregar">
                 <i class="fa-solid fa-floppy-disk"></i> GUARDAR EN SISTEMA
             </button>
         </form>
@@ -547,7 +590,7 @@
                     </tr>
                 </thead>
                 <tbody id="lista-clientes-body">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -611,12 +654,16 @@
         });
 
         const formCliente = document.getElementById('form-cliente');
+        const formTitulo = document.getElementById('form-titulo');
+        const idEdicionInput = document.getElementById('cliente-id-edicion');
+        const btnSubmit = document.getElementById('btn-submit');
         const listaClientesBody = document.getElementById('lista-clientes-body');
         const modalFactura = document.getElementById('modal-factura');
 
         formCliente.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const idEdicion = idEdicionInput.value;
             const nombre = document.getElementById('nombre').value;
             const telefono = document.getElementById('telefono').value || 'Sin número';
             const modelo = document.getElementById('modelo').value;
@@ -624,21 +671,43 @@
             const precio = parseFloat(document.getElementById('precio').value) || 0;
             const estadoPago = document.getElementById('estado-pago').value;
 
-            const nuevoCliente = {
-                id: Date.now(),
-                nombre,
-                telefono,
-                modelo,
-                falla,
-                precio,
-                estadoPago,
-                fecha: new Date().toLocaleDateString('es-CO')
-            };
-
             let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
-            clientes.push(nuevoCliente);
-            localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
 
+            if (idEdicion) {
+                // MODO EDICIÓN: Buscamos el cliente con ese id y actualizamos sus datos
+                clientes = clientes.map(cliente => {
+                    if (cliente.id === parseInt(idEdicion)) {
+                        return {
+                            ...cliente,
+                            nombre,
+                            telefono,
+                            modelo,
+                            falla,
+                            precio,
+                            estadoPago
+                        };
+                    }
+                    return cliente;
+                });
+                
+                // Reiniciar formulario al estado de registro
+                cancelarEdicion();
+            } else {
+                // MODO CREACIÓN NUEVO: Agregamos el registro de cero
+                const nuevoCliente = {
+                    id: Date.now(),
+                    nombre,
+                    telefono,
+                    modelo,
+                    falla,
+                    precio,
+                    estadoPago,
+                    fecha: new Date().toLocaleDateString('es-CO')
+                };
+                clientes.push(nuevoCliente);
+            }
+
+            localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
             formCliente.reset();
             actualizarTabla();
         });
@@ -672,6 +741,7 @@
                     <td>
                         <div class="tabla-acciones">
                             <button class="btn-tabla-factura" onclick="generarFactura(${cliente.id})">Recibo</button>
+                            <button class="btn-tabla-editar" onclick="cargarEdicion(${cliente.id})">📝 Editar</button>
                             <button class="btn-tabla-eliminar" onclick="eliminarCliente(${cliente.id})">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
@@ -683,6 +753,43 @@
 
             document.getElementById('num-deudores').innerText = deudores;
             document.getElementById('caja-total').innerText = '$' + totalCaja.toLocaleString('es-CO');
+        }
+
+        // CARGAR LOS DATOS EN LA BARRA LATERAL PARA EDITAR
+        function cargarEdicion(id) {
+            let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
+            const cliente = clientes.find(c => c.id === id);
+
+            if (cliente) {
+                // Colocamos el ID en el input oculto para saber que estamos editando
+                idEdicionInput.value = cliente.id;
+
+                // Rellenamos los campos con los datos guardados
+                document.getElementById('nombre').value = cliente.nombre;
+                document.getElementById('telefono').value = cliente.telefono === 'Sin número' ? '' : cliente.telefono;
+                document.getElementById('modelo').value = cliente.modelo;
+                document.getElementById('falla').value = cliente.falla;
+                document.getElementById('precio').value = cliente.precio;
+                document.getElementById('estado-pago').value = cliente.estadoPago;
+
+                // Cambiamos el estilo del formulario
+                formCliente.classList.add('editando');
+                formTitulo.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> EDITANDO CLIENTE`;
+                btnSubmit.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i> ACTUALIZAR DATOS`;
+                btnSubmit.classList.add('btn-editando');
+
+                // Hacemos scroll suave al formulario si la pantalla es de teléfono
+                formCliente.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // RESTABLECER FORMULARIO A MODO DE REGISTRO
+        function cancelarEdicion() {
+            idEdicionInput.value = '';
+            formCliente.classList.remove('editando');
+            formTitulo.innerHTML = `<i class="fa-solid fa-circle-plus"></i> REGISTRAR EQUIPO`;
+            btnSubmit.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> GUARDAR EN SISTEMA`;
+            btnSubmit.classList.remove('btn-editando');
         }
 
         function cambiarEstado(id) {
@@ -699,6 +806,11 @@
 
         function eliminarCliente(id) {
             if (confirm('¿Quieres eliminar este registro?')) {
+                // Si justo estábamos editando este cliente, cancelamos la edición
+                if (idEdicionInput.value === String(id)) {
+                    cancelarEdicion();
+                    formCliente.reset();
+                }
                 let clientes = JSON.parse(localStorage.getItem('franklin_clientes')) || [];
                 clientes = clientes.filter(c => c.id !== id);
                 localStorage.setItem('franklin_clientes', JSON.stringify(clientes));
