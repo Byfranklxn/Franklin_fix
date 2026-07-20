@@ -180,6 +180,10 @@
             box-shadow: 0 5px 12px rgba(255, 117, 143, 0.4);
             transition: transform 0.1s, box-shadow 0.2s;
             font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .btn:hover {
@@ -695,6 +699,10 @@
             <button class="btn" onclick="openGame('giftScreen', initGift)">🎁 Atrapa un Deseo</button>
             <button class="btn" onclick="openGame('gerberaScreen', initGerberaGame)" style="background: linear-gradient(135deg, #ffb3c6, #ff758f);">🏵️ Atrapa las Gerberas</button>
             <button class="btn" onclick="openGame('poppyScreen', initPoppyGame)" style="background: linear-gradient(135deg, #ffb3c6, #ff758f);">🌸 El Juego de la Amapola</button>
+            
+            <!-- ENLACE EXTERNO A PLNETA.HTML -->
+            <a href="plneta.html" class="btn" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb); color: #2d3748; border: 3px solid #74b9ff;">🪐 Viaje por los Planetas</a>
+
             <button class="btn" onclick="switchScreen('retoScreen')" style="background: linear-gradient(135deg, #fbc2eb, #ff4b91);">📅 Reto Diario de la Pareja</button>
             <button class="btn btn-special" onclick="openGame('specialScreen', initSpecial)">✨ Abre esto antes de irte ✨</button>
 
@@ -1366,7 +1374,7 @@
             playSynthTone(300, 0.1, 'triangle');
 
             if (checkTTTWinner('🎀')) {
-                document.getElementById('tttStatus').innerText = "😿 ¡Gó ganó el Gatito Bot! Inténtalo otra vez.";
+                document.getElementById('tttStatus').innerText = "😿 ¡Ganó el Gatito Bot! Inténtalo otra vez.";
                 bWins++;
                 document.getElementById('botWins').innerText = bWins;
                 tttGameActive = false;
@@ -1560,7 +1568,7 @@
             switchScreen('menuScreen');
         }
 
-        // --- JUEGO 5: ATRAPA LAS GERBERAS (ARKANOID) ---
+        // --- JUEGO 5: ATRAPA LAS GERBERAS ---
         let gerberaGameInterval = null;
         let gerbScore = 0, gerbLives = 3, gerbLevel = 1, gerbActive = false;
         let canvas, ctx;
