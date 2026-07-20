@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Rincón Mágico 🎀</title>
     <style>
-        /* Estilo general con Cursor de Gatito/Lazo */
         body {
             margin: 0;
             padding: 0;
@@ -22,7 +21,6 @@
             cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' style='font-size:24px'><text y='24'>🎀</text></svg>") 12 12, auto;
         }
 
-        /* FONDO DE CORAZONES FLOTANTES */
         .heart-bg {
             position: fixed;
             top: 0;
@@ -47,7 +45,6 @@
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* EFECTO RASTRO MÁGICO DEL CURSOR */
         .cursor-sparkle {
             position: absolute;
             pointer-events: none;
@@ -60,7 +57,6 @@
             100% { transform: translate(-50%, -50%) scale(0) rotate(180deg); opacity: 0; }
         }
 
-        /* EFECTO DE CONFETI */
         .confetti {
             position: fixed;
             width: 12px;
@@ -76,7 +72,6 @@
             100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
         }
 
-        /* PANTALLA DE CARGA KAWAII */
         #splashScreen {
             position: fixed;
             top: 0;
@@ -100,7 +95,6 @@
             50% { transform: scale(1.15); }
         }
 
-        /* Dedicatoria */
         .dedicatoria {
             background-color: #fff;
             border: 2px dashed #ff758f;
@@ -115,7 +109,6 @@
             animation: pulse 2s infinite;
         }
 
-        /* RELOJ DE CONEXIÓN */
         .connection-timer {
             font-size: 11px;
             color: #ff758f;
@@ -139,7 +132,6 @@
             text-align: center;
         }
 
-        /* Contenedor de la consola */
         #consoleContainer {
             position: relative;
             width: 400px;
@@ -153,7 +145,6 @@
             flex-direction: column;
         }
 
-        /* Vistas de pantalla */
         .screen {
             width: 100%;
             height: 100%;
@@ -162,21 +153,20 @@
             position: relative;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Alinea contenido arriba y botones abajo */
+            justify-content: space-between;
             padding: 15px;
             overflow-y: auto;
-            scrollbar-width: none; /* Oculta scrollbar en Firefox */
+            scrollbar-width: none;
         }
 
         .screen::-webkit-scrollbar {
-            display: none; /* Oculta scrollbar en Chrome/Safari */
+            display: none;
         }
 
         .active {
             display: flex;
         }
 
-        /* Botones estilizados */
         .btn {
             background: linear-gradient(135deg, #ff758f, #ff4d6d);
             color: white;
@@ -208,7 +198,7 @@
         }
 
         .btn-back {
-            margin-top: auto; /* Empuja el botón siempre al fondo de la pantalla */
+            margin-top: auto;
             margin-bottom: 5px;
             padding: 6px 15px;
             font-size: 12px;
@@ -223,7 +213,6 @@
             transform: scale(1.05);
         }
 
-        /* BOTONES AUXILIARES ESQUINA */
         .audio-control, .love-trigger {
             position: fixed;
             bottom: 20px;
@@ -247,7 +236,6 @@
         .audio-control { right: 20px; }
         .love-trigger { left: 20px; animation: pulse 1.5s infinite alternate; }
 
-        /* --- MENÚ PRINCIPAL --- */
         #menuScreen {
             background-color: #fff5f6;
             justify-content: flex-start;
@@ -262,7 +250,6 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* SINTONIZADOR DE ÁNIMO */
         .mood-booster-container {
             width: 90%;
             background: #fff;
@@ -298,7 +285,6 @@
             background-color: #ffccd5;
         }
 
-        /* TRACKER DE LOGROS/CUPONES */
         .trophy-tracker {
             display: flex;
             gap: 12px;
@@ -327,15 +313,45 @@
             transform: scale(1.3) rotate(10deg);
         }
 
-        /* --- JUEGO 1: LLUVIA DE DULCES (CATCH) --- */
-        #catchScreen {
-            padding: 0; /* Para que el juego use todo el recuadro */
+        .reto-card {
+            margin: 10px 0;
+            padding: 15px;
+            background: #fff0f5;
+            border: 2px dashed #ffb6c1;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
+        .reto-card h3 {
+            margin: 0 0 8px 0;
+            color: #d81b60;
+            font-size: 15px;
+        }
+        .reto-card p {
+            margin: 0;
+            color: #444;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            align-items: center;
+        }
+        .info-intentos {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        #catchScreen { padding: 0; background: #fff0f3; }
         #catchCanvas {
             position: relative;
             width: 100%;
             height: 100%;
-            background-color: #fff0f3;
         }
         #hud {
             position: absolute;
@@ -358,11 +374,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: left 0.08s ease-out;
+            transition: left 0.05s linear;
         }
         .falling-item {
             position: absolute;
             font-size: 28px;
+            user-select: none;
         }
         .catch-overlay {
             position: absolute;
@@ -376,12 +393,12 @@
             align-items: center;
             justify-content: center;
             z-index: 10;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* --- JUEGO 2: TRES EN RAYA --- */
-        #tttScreen {
-            justify-content: flex-start;
-        }
+        #tttScreen { justify-content: flex-start; }
         #tttScreen h3 { margin: 5px; }
         .score-board {
             display: flex;
@@ -429,10 +446,7 @@
             height: 20px;
         }
 
-        /* --- JUEGO 3: MEMORIA --- */
-        #memoryScreen {
-            justify-content: flex-start;
-        }
+        #memoryScreen { justify-content: flex-start; }
         #memoryScreen h3 { margin: 5px; }
         .grid-mem {
             display: grid;
@@ -453,9 +467,7 @@
             border: 2px solid #ff4d6d;
             transition: transform 0.3s, background-color 0.3s;
         }
-        .card-mem:hover {
-            transform: scale(1.05);
-        }
+        .card-mem:hover { transform: scale(1.05); }
         .card-mem.flipped {
             background-color: #fff0f3;
             color: initial;
@@ -468,19 +480,10 @@
             visibility: visible;
             opacity: 0.6;
             cursor: default;
-            animation: matchedPulse 0.4s ease;
         }
 
-        /* --- JUEGO 4: LLUVIA DE REGALOS --- */
-        #giftScreen {
-            background-color: #fff5f6;
-            padding: 0;
-        }
-        #giftCanvas {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+        #giftScreen { background-color: #fff5f6; padding: 0; }
+        #giftCanvas { position: relative; width: 100%; height: 100%; }
         .falling-gift {
             position: absolute;
             font-size: 35px;
@@ -489,65 +492,128 @@
             z-index: 15;
             user-select: none;
         }
-        .falling-gift:active {
-            transform: scale(1.4);
-        }
+        .falling-gift:active { transform: scale(1.4); }
 
-        /* --- PANTALLA ESPECIAL PARA ABRIR REGALOS ACUMULADOS --- */
-        #openingGiftsScreen {
+        #gerberaScreen {
+            padding: 0;
             background-color: #fff0f3;
-            padding: 20px;
-            justify-content: flex-start; /* Todo ordenado de arriba a abajo */
+            justify-content: flex-start;
         }
-        .gift-recap-box {
-            width: 90%;
-            background-color: #fff;
-            border: 3px dashed #ff758f;
+        .gerbera-game-wrapper {
+            background: #ffffff;
+            border: 4px solid #ff85a2;
             border-radius: 20px;
-            padding: 15px;
+            padding: 10px;
+            box-shadow: 0 15px 35px rgba(255, 133, 162, 0.4);
             text-align: center;
-            box-shadow: 0 10px 25px rgba(255, 117, 143, 0.15);
+            position: relative;
+            width: 340px;
+            height: 100%;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 220px;
-            margin-top: 10px;
-            margin-bottom: 20px; /* Dale espacio para que el botón no se monte */
+        }
+        .gerbera-game-wrapper h2 {
+            color: #ff3366;
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        .gerbera-score-board {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 5px auto;
+            font-weight: bold;
+            color: #d81b60;
+            font-size: 12px;
+        }
+        #gameCanvas {
+            background: linear-gradient(to bottom, #fff0f5, #ffe6eb);
+            border-radius: 10px;
+            border: 2px dashed #ffb6c1;
+            cursor: none;
+        }
+        .btn-iniciar-gerbera {
+            margin-top: 8px;
+            background: linear-gradient(to bottom, #ff99bc, #ff6b95);
+            border: none;
+            border-radius: 20px;
+            padding: 6px 15px;
+            font-size: 14px;
             cursor: pointer;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #d81b60;
         }
-        .gift-box-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
-            animation: bounce 1s infinite alternate;
+        .overlay-gerbera {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
+        .overlay-gerbera h1 { font-size: 30px; margin: 0 0 5px 0; color: #ff3366; }
+        .overlay-gerbera p { color: #d81b60; font-weight: bold; font-size: 13px; text-align: center; }
 
-        /* --- SOBRE DE CARTA ANIMADO --- */
+        .flower-container {
+            margin: 10px 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .flower-center {
+            width: 60px; height: 60px;
+            background: #ffcc00;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 2;
+            cursor: pointer;
+        }
+        .petals-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            max-width: 300px;
+            margin-top: 10px;
+        }
+        .petal {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+        .petal:hover { transform: scale(1.1); background: #fa163f; }
+        .petal.removed { opacity: 0; transform: scale(0); pointer-events: none; }
+        #poppy-result { font-weight: bold; color: #ff4d6d; font-size: 1rem; min-height: 25px; margin-top: 8px; text-align: center; }
+
         .envelope-wrapper {
             position: relative;
-            width: 200px;
-            height: 110px;
+            width: 200px; height: 110px;
             background-color: #ffccd5;
             border: 4px solid #ff758f;
             border-radius: 10px;
             margin: 20px auto;
             cursor: pointer;
             box-shadow: 0 10px 20px rgba(255, 117, 143, 0.2);
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .envelope-wrapper:hover {
-            transform: scale(1.08);
+            display: flex; align-items: center; justify-content: center;
         }
         .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
+            position: absolute; top: 0; left: 0;
+            width: 0; height: 0;
             border-left: 100px solid transparent;
             border-right: 100px solid transparent;
             border-top: 60px solid #ff758f;
@@ -555,18 +621,9 @@
             transition: transform 0.4s ease;
             z-index: 2;
         }
-        .envelope-wrapper.open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-        .envelope-heart {
-            font-size: 35px;
-            z-index: 3;
-            transition: transform 0.3s ease;
-        }
-        .envelope-wrapper.open .envelope-heart {
-            transform: scale(0);
-        }
+        .envelope-wrapper.open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+        .envelope-heart { font-size: 35px; z-index: 3; transition: transform 0.3s ease; }
+        .envelope-wrapper.open .envelope-heart { transform: scale(0); }
 
         .special-box {
             width: 85%;
@@ -575,42 +632,20 @@
             border-radius: 20px;
             padding: 15px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(255, 117, 143, 0.15);
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 180px;
             cursor: pointer;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes popIn {
-            0% { transform: scale(0.7); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .special-icon {
-            font-size: 45px;
-            margin-bottom: 8px;
-            animation: pulse 1.5s infinite;
-        }
-        #specialText {
-            font-size: 15px;
-            line-height: 1.5;
-            font-weight: bold;
-            color: #ff4d6d;
-        }
-        .tap-hint {
-            font-size: 11px;
-            color: #ff758f;
-            margin-top: 10px;
-            font-style: italic;
-        }
+        .special-icon { font-size: 45px; margin-bottom: 8px; }
+        #specialText { font-size: 15px; line-height: 1.5; font-weight: bold; color: #ff4d6d; }
+        .tap-hint { font-size: 11px; color: #ff758f; margin-top: 10px; font-style: italic; }
 
-        /* POPUP DE RECOMPENSA */
         .reward-popup {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0);
             width: 300px;
             background: #fff;
@@ -622,43 +657,24 @@
             text-align: center;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .reward-popup.show {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .reward-icon {
-            font-size: 50px;
-            animation: bounce 1s infinite alternate;
-        }
-
-        /* EFECTO FLASH AL GANAR */
-        .flash-win {
-            animation: flashAnimation 0.3s ease-out;
-        }
-        @keyframes flashAnimation {
-            0% { background-color: rgba(255, 255, 255, 0.8); }
-            100% { background-color: transparent; }
-        }
+        .reward-popup.show { transform: translate(-50%, -50%) scale(1); }
+        .reward-icon { font-size: 50px; }
     </style>
 </head>
 <body>
 
-    <!-- Fondo de corazones -->
     <div class="heart-bg" id="heartBg"></div>
 
-    <!-- Pantalla de carga -->
     <div id="splashScreen">
         <div class="loader-kitty">🐱🎀</div>
         <h2 style="color: #ff4d6d; font-size: 18px; margin-top: 10px;">Cargando un rincón especial... 💖</h2>
     </div>
 
-    <!-- Botones rápidos en las esquinas -->
     <div class="love-trigger" onclick="triggerLoveBubble()" title="¡Apapacho instantáneo!">💝</div>
     <div class="audio-control" id="audioToggle" onclick="toggleBackgroundMusic()" title="Encender melodía">🎵</div>
 
-    <!-- Dedicatoria arriba -->
     <div class="dedicatoria">🌸 Un pequeño espacio que hice pensando en ti... 💖</div>
     
-    <!-- Contador de tiempo compartido -->
     <div class="connection-timer">
         ⏱️ Tiempo que llevas aquí: <span id="connTimer" style="font-weight: bold; color: #ff3355;">00:00</span>
         <br><span style="font-size: 9px; opacity: 0.8;">Gracias por regalarme un ratito de tu día... ✨</span>
@@ -668,7 +684,7 @@
 
     <div id="consoleContainer">
 
-        <!-- ================= MENÚ PRINCIPAL ================= -->
+        <!-- MENÚ PRINCIPAL -->
         <div id="menuScreen" class="screen active">
             <div class="logo-kitty">🐱🎀</div>
             <h2 style="margin: 0 0 5px 0; font-size: 20px;">Juegos del Gatito</h2>
@@ -677,9 +693,11 @@
             <button class="btn" onclick="openGame('tttScreen', initTTT)">❌ Tres en Raya</button>
             <button class="btn" onclick="openGame('memoryScreen', initMemory)">🌸 Parejas de Gatitos</button>
             <button class="btn" onclick="openGame('giftScreen', initGift)">🎁 Atrapa un Deseo</button>
+            <button class="btn" onclick="openGame('gerberaScreen', initGerberaGame)" style="background: linear-gradient(135deg, #ffb3c6, #ff758f);">🏵️ Atrapa las Gerberas</button>
+            <button class="btn" onclick="openGame('poppyScreen', initPoppyGame)" style="background: linear-gradient(135deg, #ffb3c6, #ff758f);">🌸 El Juego de la Amapola</button>
+            <button class="btn" onclick="switchScreen('retoScreen')" style="background: linear-gradient(135deg, #fbc2eb, #ff4b91);">📅 Reto Diario de la Pareja</button>
             <button class="btn btn-special" onclick="openGame('specialScreen', initSpecial)">✨ Abre esto antes de irte ✨</button>
 
-            <!-- Sintonizador de Ánimo -->
             <div class="mood-booster-container">
                 <div class="mood-booster-title">¿Cómo va tu día hoy? ✨</div>
                 <div class="mood-buttons">
@@ -690,7 +708,6 @@
                 </div>
             </div>
 
-            <!-- Tracker de Cupones Reclamables -->
             <div class="trophy-tracker">
                 <span class="trophy-slot" id="trophy1" onclick="claimTrophy('t1')" title="Cupón de Dulces (Bloqueado)">🍬</span>
                 <span class="trophy-slot" id="trophy2" onclick="claimTrophy('t2')" title="Cupón de Consentimiento (Bloqueado)">👑</span>
@@ -699,28 +716,44 @@
             <div style="font-size: 11px; margin-top: 5px; color:#ff758f; font-weight: bold;">¡Gana los juegos para desbloquear y canjear cupones! 🎁</div>
         </div>
 
-        <!-- ================= JUEGO 1: LLUVIA DE DULCES (CATCH) ================= -->
+        <!-- PANTALLA: RETO DIARIO -->
+        <div id="retoScreen" class="screen" style="justify-content: center; align-items: center; background: #fff5f6;">
+            <h2 style="color: #ff4b91; margin-top: 0; font-size: 20px;">💖 Reto Diario de la Pareja 💖</h2>
+            
+            <div class="reto-card">
+                <h3 id="diaTitulo">Día 1 de 30</h3>
+                <p id="textoReto">Cargando reto...</p>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnCambiar" class="btn" onclick="cambiarReto()" style="width: 100%;">🔄 Cambiar Reto</button>
+                <span id="infoIntentos" class="info-intentos">Te quedan 3 cambios hoy</span>
+            </div>
+
+            <button class="btn btn-back" onclick="switchScreen('menuScreen')" style="margin-top: 20px;">Volver al Menú</button>
+        </div>
+
+        <!-- JUEGO 1: LLUVIA DE DULCES (CATCH) -->
         <div id="catchScreen" class="screen">
             <div id="catchCanvas">
                 <div id="hud">
-                    <span>Meta: <b style="color:#ff3355;">100 pts</b></span>
+                    <span>Meta: <b style="color:#ff3355;">50 pts</b></span>
                     <span>Puntos: <span id="catchScore" style="color:#ff3355;">0</span></span>
                     <span>Vidas: <span id="catchLives">💖💖💖</span></span>
                 </div>
                 <div id="kittyPlayer">🐱</div>
                 
                 <div id="catchOverlay" class="catch-overlay">
-                    <h3 id="catchOverlayText">¡Atrapa los dulces!<br><span style="font-size:13px; font-weight:normal;">Mueve el mouse o arrastra tu dedo.<br>¡Llega a 100 puntos sin perder vidas!</span></h3>
-                    <div style="display: flex; flex-direction: column; align-items: center;">
+                    <h3 id="catchOverlayText">¡Atrapa los dulces!<br><span style="font-size:13px; font-weight:normal;">Mueve el mouse o arrastra tu dedo.<br>¡Llega a 50 puntos sin perder vidas!</span></h3>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
                         <button class="btn" onclick="startCatchGame()">Jugar 🎀</button>
                         <button class="btn" style="background-color: #ffb3c6; font-size:14px; border:2px solid #ff758f;" onclick="exitCatch()">Volver</button>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-back" onclick="exitCatch()">Volver al Menú</button>
         </div>
 
-        <!-- ================= JUEGO 2: TRES EN RAYA ================= -->
+        <!-- JUEGO 2: TRES EN RAYA -->
         <div id="tttScreen" class="screen">
             <h3 style="margin-top: 15px;">Tres en Raya 🍎 vs 🎀</h3>
             
@@ -752,23 +785,23 @@
                 <div class="cell-ttt" data-index="8"></div>
             </div>
 
-            <button class="btn" onclick="resetScoreBoard()" style="margin-top: 15px; padding: 4px 12px; font-size:12px; background-color:#fff; color:#ff758f; border: 2px solid #ff758f;">Reiniciar Marcador</button>
+            <button class="btn" onclick="resetScoreBoard()" style="margin-top: 10px; padding: 4px 12px; font-size:12px; background-color:#fff; color:#ff758f; border: 2px solid #ff758f;">Reiniciar Marcador</button>
             <button class="btn btn-back" onclick="switchScreen('menuScreen')">Volver al Menú</button>
         </div>
 
-        <!-- ================= JUEGO 3: MEMORIA ================= -->
+        <!-- JUEGO 3: MEMORIA -->
         <div id="memoryScreen" class="screen">
             <h3>Parejas de Gatitos 🌸</h3>
-            <div style="font-size: 14px; margin-bottom: 5px;">Movimientos: <span id="memMoves">0</span></div>
+            <div style="font-size: 14px; margin-bottom: 2px;">Movimientos: <span id="memMoves">0</span></div>
             <div class="grid-mem" id="memGrid"></div>
-            <button class="btn" onclick="initMemory()" style="margin-top: 15px; padding: 5px 15px; font-size:14px;">Reiniciar</button>
+            <button class="btn" onclick="initMemory()" style="margin-top: 10px; padding: 5px 15px; font-size:14px;">Reiniciar</button>
             <button class="btn btn-back" onclick="switchScreen('menuScreen')">Volver al Menú</button>
         </div>
 
-        <!-- ================= JUEGO 4: LLUVIA DE REGALOS (DESEOS) ================= -->
+        <!-- JUEGO 4: LLUVIA DE REGALOS -->
         <div id="giftScreen" class="screen">
             <div id="giftCanvas">
-                <div id="hud" style="color: #ff4d6d;">
+                <div id="hud" style="color: #ff4d6d; position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; z-index: 5;">
                     <span>Tiempo: <span id="giftTimer" style="color:#ff3355;">15s</span></span>
                     <span>Recolectados: <span id="giftCount" style="color:#ff3355;">0</span>🎈</span>
                 </div>
@@ -776,31 +809,60 @@
                 <div id="giftOverlay" class="catch-overlay">
                     <h3>🎁 Lluvia de Deseos 🎁</h3>
                     <p style="font-size: 13px; font-weight: normal; max-width: 280px; text-align: center; margin-bottom: 15px;">
-                        ¡Van a caer cajitas de regalo! Tócalas rápido para recolectarlas en tu bolsa.<br><br><b>¡Al final del juego las abriremos todas juntas para ver tus sorpresas! ⭐</b>
+                        ¡Van a caer cajitas de regalo! Tócalas rápido para recolectarlas en tu bolsa.<br><br><b>¡Consigue 8 para ganar! ⭐</b>
                     </p>
-                    <button class="btn" onclick="startGiftGame()">¡Comenzar! 🌸</button>
-                    <button class="btn" style="background-color: #ffb3c6; font-size:14px; border:2px solid #ff758f;" onclick="switchScreen('menuScreen')">Volver</button>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button class="btn" onclick="startGiftGame()">¡Comenzar! 🌸</button>
+                        <button class="btn" style="background-color: #ffb3c6; font-size:14px; border:2px solid #ff758f;" onclick="exitGift()">Volver</button>
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-back" onclick="exitGift()">Volver al Menú</button>
         </div>
 
-        <!-- ================= PANTALLA: APERTURA DE REGALOS ACUMULADOS ================= -->
-        <div id="openingGiftsScreen" class="screen">
-            <h3 style="margin: 10px 0 5px 0;">🎁 Abriendo tus Regalos 🎁</h3>
-            <p id="openingGiftsProgress" style="font-size: 13px; margin: 0 0 10px 0;">Te quedan <b id="remainingGiftsCount">0</b> regalos por abrir</p>
-            
-            <div class="gift-recap-box" id="recapGiftBox" onclick="openNextCollectedGift()">
-                <div class="gift-box-icon" id="recapGiftIcon">🎁</div>
-                <div id="recapGiftText" style="font-size: 15px; font-weight: bold; color: #ff4d6d; padding: 0 10px;">¡Haz clic en el regalo para abrirlo! ✨</div>
-                <div class="tap-hint" id="recapTapHint">¡Toca para revelar el mensaje tierno! 🌸</div>
+        <!-- JUEGO 5: ATRAPA LAS GERBERAS -->
+        <div id="gerberaScreen" class="screen">
+            <div class="gerbera-game-wrapper">
+                <h2>🌸 Atrapa las Gerberas 🌸</h2>
+                
+                <div class="gerbera-score-board">
+                    <span>Nivel: <span id="level-display">1</span></span>
+                    <span>Puntos: <span id="gerberaScore">0</span></span>
+                    <span>Vidas: <span id="gerberaLives">3</span> ❤️</span>
+                </div>
+
+                <canvas id="gameCanvas" width="300" height="340"></canvas>
+                
+                <button class="btn-iniciar-gerbera" id="startGerberaBtn" onclick="iniciarJuegoGerbera()">¡Jugar!</button>
+
+                <div id="pantalla-nivel" class="overlay-gerbera">
+                    <h1 id="texto-nivel">¡Nivel 2!</h1>
+                    <p>Prepárate, va más rápido...</p>
+                </div>
+
+                <div id="pantalla-victoria" class="overlay-gerbera">
+                    <h1 style="font-size: 40px;">🏵️</h1>
+                    <p>¡Eres la mejor! Completaste todos los niveles.</p>
+                    <p>✨ Cupón desbloqueado ✨</p>
+                    <button class="btn-iniciar-gerbera" onclick="switchScreen('menuScreen')" style="margin-top: 10px;">Volver al Menú</button>
+                </div>
             </div>
-            
-            <!-- Botón correctamente ubicado fuera del bloque de puntos -->
-            <button class="btn btn-back" id="exitOpeningScreenBtn" onclick="switchScreen('menuScreen')" style="display:none;">Volver al Menú</button>
+            <button class="btn btn-back" onclick="exitGerberaGame()" style="margin-top: 5px;">Volver al Menú</button>
         </div>
 
-        <!-- ================= PANTALLA ESPECIAL: ANTES DE IRTE ================= -->
+        <!-- JUEGO DE LAS AMAPOLAS -->
+        <div id="poppyScreen" class="screen">
+            <h3 style="margin: 10px 0 5px 0;">El Juego de la Amapola 🌸</h3>
+            <p style="font-size: 12px; text-align: center; margin: 0 0 5px 0;">Arranca los pétalos uno a uno:</p>
+            <div class="flower-container">
+                <div class="flower-center">🌻</div>
+                <div class="petals-grid" id="petalsGridContainer"></div>
+            </div>
+            <div id="poppy-result"></div>
+            <button class="btn" onclick="initPoppyGame()" style="margin-top: 5px; padding: 5px 12px; font-size: 12px;">Reiniciar Amapola</button>
+            <button class="btn btn-back" onclick="switchScreen('menuScreen')">Volver al Menú</button>
+        </div>
+
+        <!-- PANTALLA ESPECIAL -->
         <div id="specialScreen" class="screen">
             <h3 style="margin-top: 10px; margin-bottom: 5px;">Para Ti ✨</h3>
             
@@ -815,16 +877,14 @@
                 <div class="tap-hint">Toca la tarjetita para ver el siguiente mensaje... 🌸</div>
             </div>
 
-            <!-- 👇 AQUÍ ESTÁ TU NUEVO BOTÓN 👇 -->
             <a href="carta.html" class="btn btn-special" style="text-decoration: none; text-align: center; margin-top: 15px; width: 85%; padding: 10px; box-sizing: border-box; line-height: 1.3;">
                 Oprime aquí para pasar a la siguiente página y pasar para la carta
             </a>
-            <!-- 👆 AQUÍ TERMINA TU NUEVO BOTÓN 👆 -->
 
             <button class="btn btn-back" onclick="switchScreen('menuScreen')">Volver al Menú</button>
         </div>
 
-        <!-- POPUP DE RECOMPENSAS / CANJEAR CUPONES -->
+        <!-- POPUP DE RECOMPENSAS -->
         <div class="reward-popup" id="rewardPopup">
             <div class="reward-icon" id="rewardIcon">🎁</div>
             <h3 style="margin: 10px 0 5px 0; font-size: 18px; color: #ff4d6d;" id="rewardTitle">¡Logro Desbloqueado! 🎉</h3>
@@ -835,17 +895,15 @@
     </div>
 
     <script>
-        // Logros desbloqueados y cupones reclamables
         let achievements = { t1: false, t2: false, t3: false };
         let audioCtx = null;
-        let bgOsc = null, bgGain = null, bgSequenceInterval = null;
+        let bgSequenceInterval = null;
         let musicPlaying = false;
 
-        // Cupones que se ganan con los logros
         const couponRewards = {
             t1: {
                 title: "🎟️ Cupón Canjeable: ¡Postrecito! 🍧",
-                text: "<b>¡Ganaste este cupón!</b><br><br>Válido por una salida especial a comer helado, postre o lo que más te provoque cuando tú quieras. ¡Invito yo! 🍧🍓"
+                text: "<b>¡Ganaste este cupón!</b><br><br>Válido por una salida especial a comer helado, postre o lo que más te provoque. ¡Invito yo! 🍧🍓"
             },
             t2: {
                 title: "🎟️ Cupón Canjeable: ¡Abrazo Gigante! 🤗",
@@ -853,21 +911,118 @@
             },
             t3: {
                 title: "🎟️ Cupón Canjeable: ¡Tu Plato Favorito! 🍕",
-                text: "<b>¡Ganaste este cupón!</b><br><br>Válido para pedir que cocine tu comida preferida o que vayamos por ella. ¡Tú solo ordenas y yo consiento! 🍕🍝💖"
+                text: "<b>¡Ganaste este cupón!</b><br><br>Válido para pedir que cocine tu comida preferida o ir por ella. ¡Tú solo ordenas y yo consiento! 🍕🍝💖"
             }
         };
 
-        // Ocultar pantalla de carga al inicio
+        // RETO DIARIO
+        const listaRetos = [
+            "Día 1: Escribe un párrafo largo detallando qué fue lo primero que te enamoró de tu pareja.",
+            "Día 2: Mándale un audio de buenos días cantándole una canción cursi.",
+            "Día 3: Inventa un apodo nuevo y cariñoso que deban usar obligatoriamente todo el día.",
+            "Día 4: Diseñen mentalmente su casa ideal y discutan de quién se encargaría de qué.",
+            "Día 5: Jueguen a las 20 preguntas íntimas sin mentir en ninguna.",
+            "Día 6: Dedícale una canción romántica y explícale por qué elegiste esa letra.",
+            "Día 7: Manden una captura de pantalla de su galería con la foto más tierna o graciosa del otro.",
+            "Día 8: Escribe una minihistoria de cómo sería verse por primera vez en persona.",
+            "Día 9: Hazle un cumplido sincero a tu pareja cada 2 horas durante el día.",
+            "Día 10: ¡Día libre! Tienen permitida una videollamada larga sin hablar, solo haciendo cosas juntos.",
+            "Día 11: Confiesa un pequeño secreto o manía extraña que casi nadie sepa de ti.",
+            "Día 12: Escríbele una cartita virtual usando solo emojis y que la otra persona adivine.",
+            "Día 13: Imaginen una cita perfecta con presupuesto ilimitado y descríbela paso a paso.",
+            "Día 14: Acuéstense al mismo tiempo en videollamada o chat hasta quedarse dormidos.",
+            "Día 15: Mándale una foto de lo que estás haciendo exactamente en este segundo.",
+            "Día 16: Di 3 cosas específicas que admires de la personalidad de tu pareja.",
+            "Día 17: Jueguen a 'Prefieres...' pero con preguntas románticas y complicadas.",
+            "Día 18: Haz un collage rápido o dibujo feo digital de su cara y envíaselo.",
+            "Día 19: Comparen sus gustos musicales y armen una mini playlist compartida de 5 canciones.",
+            "Día 20: Escribe un mensaje de agradecimiento por todas las veces que te ha hecho sonreír.",
+            "Día 21: Practiquen un idioma inventado o hablen en clave romántica todo el rato.",
+            "Día 22: Mándale un sticker o meme que te recuerde totalmente a tu pareja.",
+            "Día 23: Imaginen cómo sería su mascota si tuvieran una juntos y pónganle nombre.",
+            "Día 24: Dile 'te amo' o una frase linda de 3 maneras diferentes y originales.",
+            "Día 25: Hazle una broma tierna por chat y aguanten la risa lo más que puedan.",
+            "Día 26: Recuerden juntos cuál ha sido su momento favorito desde que están en el juego.",
+            "Día 27: Envíale una nota de voz diciéndole lo mucho que valoras que esté en tu vida.",
+            "Día 28: Planéense un futuro hipotético a 5 años desde hoy.",
+            "Día 29: Dedícale un poema corto o un piropo exageradamente exagerado y gracioso.",
+            "Día 30: ¡Último reto! Intercambien roles por 10 minutos y actúen como si fueran el otro."
+        ];
+
+        function obtenerFechaHoy() {
+            const fecha = new Date();
+            return fecha.toISOString().split('T')[0];
+        }
+
+        let datosJuego = JSON.parse(localStorage.getItem('retoParejaData')) || {
+            fechaInicio: obtenerFechaHoy(),
+            indiceDia: 0,
+            intentosRestantes: 3,
+            ultimaFechaCambio: "",
+            retoActualIndex: 0
+        };
+
+        const hoy = obtenerFechaHoy();
+        if (datosJuego.ultimaFechaCambio !== hoy) {
+            const inicio = new Date(datosJuego.fechaInicio);
+            const actual = new Date(hoy);
+            const diferenciaDias = Math.floor((actual - inicio) / (1000 * 60 * 60 * 24));
+            
+            datosJuego.indiceDia = Math.min(diferenciaDias, listaRetos.length - 1);
+            datosJuego.retoActualIndex = datosJuego.indiceDia;
+            datosJuego.intentosRestantes = 3;
+            datosJuego.ultimaFechaCambio = hoy;
+            
+            localStorage.setItem('retoParejaData', JSON.stringify(datosJuego));
+        }
+
+        function actualizarInterfazReto() {
+            const elDia = document.getElementById('diaTitulo');
+            const elTexto = document.getElementById('textoReto');
+            const elIntentos = document.getElementById('infoIntentos');
+            const elBtn = document.getElementById('btnCambiar');
+
+            if(elDia) elDia.textContent = `Día ${datosJuego.retoActualIndex + 1} de 30`;
+            if(elTexto) elTexto.textContent = listaRetos[datosJuego.retoActualIndex];
+            if(elIntentos) elIntentos.textContent = `Te quedan ${datosJuego.intentosRestantes} cambios hoy`;
+            
+            if (elBtn) {
+                if (datosJuego.intentosRestantes <= 0) {
+                    elBtn.disabled = true;
+                    elBtn.style.background = "#ccc";
+                } else {
+                    elBtn.disabled = false;
+                    elBtn.style.background = "#ff4b91";
+                }
+            }
+        }
+
+        function cambiarReto() {
+            if (datosJuego.intentosRestantes > 0) {
+                datosJuego.intentosRestantes--;
+                let nuevoIndex;
+                do {
+                    nuevoIndex = Math.floor(Math.random() * listaRetos.length);
+                } while (nuevoIndex === datosJuego.retoActualIndex && listaRetos.length > 1);
+
+                datosJuego.retoActualIndex = nuevoIndex;
+                localStorage.setItem('retoParejaData', JSON.stringify(datosJuego));
+                actualizarInterfazReto();
+            }
+        }
+
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
-                if (splash) splash.style.opacity = '0';
-                setTimeout(() => { if(splash) splash.style.display = 'none'; }, 500);
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
             }, 1200);
             createFloatingHearts();
+            actualizarInterfazReto();
         });
 
-        // Corazones flotantes de fondo
         function createFloatingHearts() {
             const bg = document.getElementById('heartBg');
             const icons = ['❤️', '💖', '🎀', '🌸', '💕'];
@@ -882,45 +1037,32 @@
             }, 600);
         }
 
-        // Reloj de conexión activo
         let startTime = Date.now();
         setInterval(() => {
             let diff = Date.now() - startTime;
             let mins = Math.floor(diff / 60000);
             let secs = Math.floor((diff % 60000) / 1000);
-            document.getElementById('connTimer').innerText = 
-                (mins < 10 ? '0' + mins : mins) + ':' + (secs < 10 ? '0' + secs : secs);
+            const timerEl = document.getElementById('connTimer');
+            if(timerEl) timerEl.innerText = (mins < 10 ? '0' + mins : mins) + ':' + (secs < 10 ? '0' + secs : secs);
         }, 1000);
 
-        // Efecto del cursor con estrellitas
         document.addEventListener('mousemove', (e) => {
             if (Math.random() > 0.15) return;
             const star = document.createElement('div');
             star.className = 'cursor-sparkle';
-            const sparkles = ['✨', '🌸', '💖', '⭐', '🎈'];
-            star.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
+            star.innerText = ['✨', '🌸', '💖', '⭐', '🎈'][Math.floor(Math.random() * 5)];
             star.style.left = e.pageX + 'px';
             star.style.top = e.pageY + 'px';
             document.body.appendChild(star);
             setTimeout(() => star.remove(), 1000);
         });
 
-        document.addEventListener('touchmove', (e) => {
-            if (Math.random() > 0.2) return;
-            const touch = e.touches[0];
-            const star = document.createElement('div');
-            star.className = 'cursor-sparkle';
-            star.innerText = '✨';
-            star.style.left = touch.pageX + 'px';
-            star.style.top = touch.pageY + 'px';
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1000);
-        });
-
-        // CAMBIO DE PANTALLAS
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            if(screenId === 'retoScreen') {
+                actualizarInterfazReto();
+            }
         }
 
         function openGame(screenId, initCallback) {
@@ -929,41 +1071,37 @@
             if (initCallback) initCallback();
         }
 
-        // SINTONIZADOR DE ÁNIMO
         function tuneMood(mood) {
             let title = "", desc = "", icon = "🌸";
             if (mood === 'tired') {
                 title = "Mimos virtuales en camino... 🥱🩹";
-                desc = "Sé que el día pudo ser agotador o pesado. Te mereces descansar, desconectarte un ratito de todo y consentirte. ¡Hiciste un gran trabajo hoy, descansa tus ojitos y recarga energías! 🧸✨";
+                desc = "Sé que el día pudo ser pesado. Te mereces descansar y recargar energías. ¡Hiciste un gran trabajo hoy! 🧸✨";
                 icon = "🥱";
             } else if (mood === 'happy') {
                 title = "¡Qué felicidad verte sonreír! 😊💖";
-                desc = "Tu felicidad brilla muchísimo y alegra todo este rincón. Espero que esa hermosa sonrisa dure todo el día y que todo te siga saliendo de maravilla. ¡Te lo súper mereces! 🎉🍦";
+                desc = "Tu felicidad brilla muchísimo y alegra todo este rincón. ¡Que todo te siga saliendo de maravilla! 🎉🍦";
                 icon = "😊";
             } else if (mood === 'busy') {
                 title = "¡Inhala, exhala... tú puedes! 🤯⚡";
-                desc = "Tranquila, tómate las cosas un paso a la vez. No te satures, haz una pausa cortita, estira tus brazos y toma un vasito con agua. ¡Confío plenamente en ti y sé que vas a resolver todo excelente! 💪🌸";
+                desc = "Tranquila, tómate las cosas un paso a la vez. Haz una pausa cortita y toma agua. ¡Confío plenamente en ti! 💪🌸";
                 icon = "🤯";
             } else if (mood === 'sad') {
                 title = "Un curita muy fuerte para tu corazón... 🩹❤️";
-                desc = "Si hoy te sientes un poquito triste, cansada emocionalmente o con el corazoncito bajito, recuerda que está bien no estar bien todo el tiempo. Estoy aquí para mandarte el abrazo virtual más cálido y apapachador del mundo. ¡No estás solita! 🫂🧸";
+                desc = "Si hoy te sientes un poquito triste, recuerda que estoy aquí para mandarte el abrazo virtual más cálido. ¡No estás solita! 🫂🧸";
                 icon = "🩹";
             }
             showCustomPopup(icon, title, desc);
         }
 
-        // APAPACHO RÁPIDO
         function triggerLoveBubble() {
             initAudio();
-            playSynthTone(523.25, 0.15, 'sine'); // C5
-            setTimeout(() => playSynthTone(659.25, 0.2, 'sine'), 100); // E5
+            playSynthTone(523.25, 0.15, 'sine');
+            setTimeout(() => playSynthTone(659.25, 0.2, 'sine'), 100);
             
-            // Lluvia instantánea de corazones grandes
             for(let i=0; i<15; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'confetti';
-                const heartIcons = ['❤️','💖','💝','💕','🧸','✨'];
-                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.innerText = ['❤️','💖','💝','💕','🧸','✨'][Math.floor(Math.random() * 6)];
                 heart.style.fontSize = Math.random() * 20 + 15 + 'px';
                 heart.style.left = Math.random() * window.innerWidth + 'px';
                 heart.style.top = '-20px';
@@ -972,21 +1110,9 @@
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 3000);
             }
-            
-            const sweetPhrases = [
-                "¡Te mando un abrazo virtual gigante de oso! 🧸🫂",
-                "¡Eres una personita increíble y súper valiosa! ⭐",
-                "¡Que tu día se llene de puras cosas bonitas y sonrisas! 🌸",
-                "¡Recuerda sonreír hoy, tu sonrisa alegra el mundo! 😊",
-                "¡Estoy muy orgulloso de ti por todo lo que te esfuerzas! 💖",
-                "¡Te mereces todo lo lindo del universo! ✨",
-                "¡Un besito en la frente para que andes feliz! 😘"
-            ];
-            const randomMsg = sweetPhrases[Math.floor(Math.random() * sweetPhrases.length)];
-            showCustomPopup("💝", "¡Apapacho Sorpresa! 🌸", randomMsg);
+            showCustomPopup("💝", "¡Apapacho Sorpresa! 🌸", "¡Eres una personita increíble y súper valiosa! Que tu día se llene de puras cosas bonitas. ✨");
         }
 
-        // POPUP PERSONALIZADO
         function showCustomPopup(icon, title, text) {
             document.getElementById('rewardIcon').innerText = icon;
             document.getElementById('rewardTitle').innerText = title;
@@ -999,97 +1125,62 @@
             playSynthTone(392.00, 0.1, 'triangle');
         }
 
-        // CONTROL DE LOGROS Y CUPONES
         function checkUnlockAchievements() {
-            if (achievements.t1) {
-                const t1 = document.getElementById('trophy1');
-                t1.classList.add('unlocked');
-                t1.title = "¡Cupón de Dulces Desbloqueado! Haz clic para abrir.";
-            }
-            if (achievements.t2) {
-                const t2 = document.getElementById('trophy2');
-                t2.classList.add('unlocked');
-                t2.title = "¡Cupón de Consentimiento Desbloqueado! Haz clic para abrir.";
-            }
-            if (achievements.t3) {
-                const t3 = document.getElementById('trophy3');
-                t3.classList.add('unlocked');
-                t3.title = "¡Cupón de Comida Desbloqueado! Haz clic para abrir.";
-            }
+            if (achievements.t1) document.getElementById('trophy1').classList.add('unlocked');
+            if (achievements.t2) document.getElementById('trophy2').classList.add('unlocked');
+            if (achievements.t3) document.getElementById('trophy3').classList.add('unlocked');
         }
 
         function claimTrophy(trophyKey) {
             if (!achievements[trophyKey]) {
-                showCustomPopup("🔒", "¡Cupón Bloqueado!", "Para desbloquear este fabuloso cupón, debes ganar primero el juego correspondiente. ¡Inténtalo, yo sé que puedes! 🌸✨");
+                showCustomPopup("🔒", "¡Cupón Bloqueado!", "Para desbloquear este fabuloso cupón, debes ganar primero el juego correspondiente. ¡Inténtalo! 🌸✨");
                 return;
             }
             const reward = couponRewards[trophyKey];
             showCustomPopup("🎟️", reward.title, reward.text);
         }
 
-        // ================= AUDIO SINTETIZADOR WEB (CHIPTUNE KAWAII) =================
         function initAudio() {
             if (audioCtx) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            } catch(e) {
-                console.log("No Web Audio API support");
-            }
+            try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
         }
 
         function playSynthTone(freq, duration, type='sine', volume=0.1) {
             if (!audioCtx) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            
             let osc = audioCtx.createOscillator();
             let gainNode = audioCtx.createGain();
-            
             osc.type = type;
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            
             gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-            
             osc.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
             osc.start();
             osc.stop(audioCtx.currentTime + duration);
         }
 
-        // Melodía de fondo chiptune
         function toggleBackgroundMusic() {
             initAudio();
             const toggleBtn = document.getElementById('audioToggle');
             if (musicPlaying) {
                 stopMusic();
                 toggleBtn.innerText = "🔇";
-                toggleBtn.title = "Encender melodía";
             } else {
                 startMusic();
                 toggleBtn.innerText = "🎵";
-                toggleBtn.title = "Silenciar melodía";
             }
         }
 
         function startMusic() {
             if (!audioCtx) return;
             musicPlaying = true;
-            let tempo = 140; // BPM
-            let noteDuration = 60 / tempo * 0.5; // Corchea
-            
-            const melody = [
-                523.25, 587.33, 659.25, 783.99, 659.25, 783.99, 880.00, 987.77,
-                880.00, 783.99, 659.25, 587.33, 523.25, 392.00, 440.00, 493.88
-            ];
+            let melody = [523.25, 587.33, 659.25, 783.99, 880.00];
             let index = 0;
-            
             bgSequenceInterval = setInterval(() => {
-                if (Math.random() > 0.05) { 
-                    playSynthTone(melody[index], noteDuration * 0.9, 'triangle', 0.04);
-                }
+                playSynthTone(melody[index], 0.2, 'triangle', 0.04);
                 index = (index + 1) % melody.length;
-            }, noteDuration * 1000);
+            }, 300);
         }
 
         function stopMusic() {
@@ -1097,694 +1188,617 @@
             if (bgSequenceInterval) clearInterval(bgSequenceInterval);
         }
 
-
-        // ================= JUEGO 1: LLUVIA DE DULCES (CATCH) =================
-        let catchGameActive = false;
-        let catchScore = 0;
-        let catchLives = 3;
-        let catchItems = [];
-        let catchInterval = null;
-        let catchSpawnInterval = null;
-        let catchPlayerX = 175;
-        const catchCanvas = document.getElementById('catchCanvas');
-        const kittyPlayer = document.getElementById('kittyPlayer');
-
-        catchCanvas.addEventListener('mousemove', (e) => {
-            if (!catchGameActive) return;
-            const rect = catchCanvas.getBoundingClientRect();
-            let relativeX = e.clientX - rect.left - 25; 
-            setPlayerPosition(relativeX);
-        });
-
-        catchCanvas.addEventListener('touchmove', (e) => {
-            if (!catchGameActive) return;
-            const rect = catchCanvas.getBoundingClientRect();
-            const touch = e.touches[0];
-            let relativeX = touch.clientX - rect.left - 25;
-            setPlayerPosition(relativeX);
-            e.preventDefault();
-        }, { passive: false });
-
-        function setPlayerPosition(x) {
-            if (x < 0) x = 0;
-            if (x > 350) x = 350; 
-            catchPlayerX = x;
-            kittyPlayer.style.left = catchPlayerX + 'px';
-        }
+        // --- JUEGO 1: LLUVIA DE DULCES ---
+        let catchScoreVal = 0, catchLivesVal = 3, catchInterval = null, itemInterval = null, catchActive = false;
+        const kitty = document.getElementById('kittyPlayer');
+        const catchContainer = document.getElementById('catchCanvas');
 
         function initCatch() {
-            catchGameActive = false;
-            catchScore = 0;
-            catchLives = 3;
-            document.getElementById('catchScore').innerText = catchScore;
-            updateCatchLivesUI();
-            
-            document.querySelectorAll('.falling-item').forEach(i => i.remove());
-            catchItems = [];
-            
-            document.getElementById('catchOverlayText').innerHTML = "¡Atrapa los dulces!<br><span style='font-size:13px; font-weight:normal;'>Mueve el mouse o arrastra tu dedo.<br>¡Llega a 100 puntos sin perder tus vidas!</span>";
+            catchScoreVal = 0; catchLivesVal = 3; catchActive = false;
+            document.getElementById('catchScore').innerText = catchScoreVal;
+            document.getElementById('catchLives').innerText = "💖".repeat(catchLivesVal);
             document.getElementById('catchOverlay').style.display = 'flex';
+            document.getElementById('catchOverlayText').innerHTML = "¡Atrapa los dulces!<br><span style='font-size:13px; font-weight:normal;'>Mueve el mouse o arrastra tu dedo.<br>¡Llega a 50 puntos sin perder vidas!</span>";
+            document.querySelectorAll('.falling-item').forEach(el => el.remove());
         }
 
         function startCatchGame() {
-            initAudio();
             document.getElementById('catchOverlay').style.display = 'none';
-            catchGameActive = true;
-            catchScore = 0;
-            catchLives = 3;
-            document.getElementById('catchScore').innerText = catchScore;
-            updateCatchLivesUI();
-            
-            catchInterval = setInterval(updateCatchGame, 20);
-            catchSpawnInterval = setInterval(spawnCatchItem, 800);
-            
-            playSynthTone(523.25, 0.1, 'sine');
-            setTimeout(() => playSynthTone(659.25, 0.15, 'sine'), 100);
+            catchActive = true;
+            catchScoreVal = 0; catchLivesVal = 3;
+            document.getElementById('catchScore').innerText = catchScoreVal;
+            document.getElementById('catchLives').innerText = "💖".repeat(catchLivesVal);
+
+            if(itemInterval) clearInterval(itemInterval);
+            if(catchInterval) clearInterval(catchInterval);
+
+            itemInterval = setInterval(spawnCatchItem, 700);
+            catchInterval = setInterval(updateCatchGame, 30);
         }
 
-        function updateCatchLivesUI() {
-            let hearts = "";
-            for (let i = 0; i < 3; i++) {
-                hearts += (i < catchLives) ? "💖" : "🖤";
-            }
-            document.getElementById('catchLives').innerText = hearts;
-        }
+        catchContainer.addEventListener('mousemove', (e) => {
+            if (!catchActive) return;
+            const rect = catchContainer.getBoundingClientRect();
+            let x = e.clientX - rect.left - 25;
+            if (x < 0) x = 0;
+            if (x > rect.width - 50) x = rect.width - 50;
+            kitty.style.left = x + 'px';
+        });
+
+        catchContainer.addEventListener('touchmove', (e) => {
+            if (!catchActive) return;
+            const rect = catchContainer.getBoundingClientRect();
+            let x = e.touches[0].clientX - rect.left - 25;
+            if (x < 0) x = 0;
+            if (x > rect.width - 50) x = rect.width - 50;
+            kitty.style.left = x + 'px';
+        });
 
         function spawnCatchItem() {
-            if (!catchGameActive) return;
-            const isBomb = Math.random() < 0.25; 
-            const element = document.createElement('div');
-            element.className = 'falling-item';
-            
-            const sweets = ['🍬', '🍭', '🍓', '🍩', '🍪', '🍨'];
-            const bombs = ['💣', '🍋', '⚡'];
-            
-            element.innerText = isBomb 
-                ? bombs[Math.floor(Math.random() * bombs.length)] 
-                : sweets[Math.floor(Math.random() * sweets.length)];
-                
-            element.style.left = Math.random() * 370 + 'px'; 
-            element.style.top = '25px';
-            catchCanvas.appendChild(element);
-            
-            catchItems.push({
-                dom: element,
-                y: 25,
-                speed: Math.random() * 2 + 2.5 + (catchScore / 50), 
-                isBomb: isBomb
-            });
+            if (!catchActive) return;
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            const symbols = ['🍬', '🍫', '🍩', '🍓', '🧁', '💣'];
+            const sym = symbols[Math.floor(Math.random() * symbols.length)];
+            item.innerText = sym;
+            item.dataset.type = (sym === '💣') ? 'bomb' : 'sweet';
+            item.style.left = Math.random() * (catchContainer.clientWidth - 40) + 'px';
+            item.style.top = '-30px';
+            catchContainer.appendChild(item);
         }
 
         function updateCatchGame() {
-            for (let i = catchItems.length - 1; i >= 0; i--) {
-                let item = catchItems[i];
-                item.y += item.speed;
-                item.dom.style.top = item.y + 'px';
+            if (!catchActive) return;
+            const items = document.querySelectorAll('.falling-item');
+            const kittyRect = kitty.getBoundingClientRect();
+
+            items.forEach(item => {
+                let top = parseFloat(item.style.top);
+                top += 4;
+                item.style.top = top + 'px';
+
+                const itemRect = item.getBoundingClientRect();
                 
-                if (item.y >= 435 && item.y <= 475) { 
-                    let itemX = parseFloat(item.dom.style.left);
-                    if (itemX + 25 >= catchPlayerX && itemX <= catchPlayerX + 50) {
-                        if (item.isBomb) {
-                            catchLives--;
-                            updateCatchLivesUI();
-                            playSynthTone(150, 0.3, 'sawtooth', 0.15); 
-                            catchCanvas.classList.add('flash-win');
-                            setTimeout(() => catchCanvas.classList.remove('flash-win'), 300);
-                            
-                            if (catchLives <= 0) {
-                                endCatchGame(false);
-                            }
-                        } else {
-                            catchScore += 10;
-                            document.getElementById('catchScore').innerText = catchScore;
-                            playSynthTone(783.99, 0.1, 'sine'); 
-                            
-                            if (catchScore >= 100) {
-                                endCatchGame(true);
-                            }
-                        }
-                        item.dom.remove();
-                        catchItems.splice(i, 1);
-                        continue;
+                if (
+                    itemRect.bottom >= kittyRect.top &&
+                    itemRect.top <= kittyRect.bottom &&
+                    itemRect.right >= kittyRect.left &&
+                    itemRect.left <= kittyRect.right
+                ) {
+                    if (item.dataset.type === 'bomb') {
+                        catchLivesVal--;
+                        playSynthTone(150, 0.2, 'sawtooth');
+                    } else {
+                        catchScoreVal += 5;
+                        playSynthTone(600, 0.1, 'sine');
                     }
+                    document.getElementById('catchScore').innerText = catchScoreVal;
+                    document.getElementById('catchLives').innerText = "💖".repeat(Math.max(0, catchLivesVal));
+                    item.remove();
+
+                    if (catchLivesVal <= 0) {
+                        endCatchGame(false);
+                    } else if (catchScoreVal >= 50) {
+                        endCatchGame(true);
+                    }
+                } else if (top > catchContainer.clientHeight) {
+                    item.remove();
                 }
-                
-                if (item.y > 495) {
-                    item.dom.remove();
-                    catchItems.splice(i, 1);
-                }
-            }
+            });
         }
 
         function endCatchGame(won) {
-            catchGameActive = false;
+            catchActive = false;
+            clearInterval(itemInterval);
             clearInterval(catchInterval);
-            clearInterval(catchSpawnInterval);
+            document.querySelectorAll('.falling-item').forEach(el => el.remove());
             
-            document.querySelectorAll('.falling-item').forEach(i => i.remove());
-            catchItems = [];
-            
+            const overlay = document.getElementById('catchOverlay');
+            overlay.style.display = 'flex';
             if (won) {
                 achievements.t1 = true;
                 checkUnlockAchievements();
-                playSynthTone(523.25, 0.1, 'sine');
-                setTimeout(() => playSynthTone(659.25, 0.1, 'sine'), 100);
-                setTimeout(() => playSynthTone(783.99, 0.1, 'sine'), 200);
-                setTimeout(() => playSynthTone(1046.50, 0.3, 'sine'), 300);
-                
-                document.getElementById('catchOverlayText').innerHTML = "<span style='font-size:40px;'>🎉🏆</span><br>¡Increíble, ganaste!<br><span style='font-size:12px; font-weight:normal; color:#555;'>Has alcanzado la meta y desbloqueaste tu primer <b>Cupón Reclamable de Postres (🍬)</b> en la pantalla principal. ¡A canjearlo!</span>";
+                document.getElementById('catchOverlayText').innerHTML = "🎉 ¡Lo lograste! 🎉<br><span style='font-size:13px; font-weight:normal;'>¡Desbloqueaste el cupón de dulces 🍬!</span>";
+                playSynthTone(800, 0.3, 'sine');
             } else {
-                playSynthTone(130.81, 0.4, 'sawtooth'); 
-                document.getElementById('catchOverlayText').innerHTML = "<span style='font-size:40px;'>🩹🐱</span><br>¡Oh no, te quedaste sin vidas!<br><span style='font-size:12px; font-weight:normal; color:#555;'>No te preocupes, el gatito te cura las heridas. ¡Vuelve a intentarlo cuando quieras!</span>";
+                document.getElementById('catchOverlayText').innerHTML = "💔 ¡Oh no, perdiste las vidas!<br><span style='font-size:13px; font-weight:normal;'>Inténtalo de nuevo.</span>";
             }
-            document.getElementById('catchOverlay').style.display = 'flex';
         }
 
         function exitCatch() {
-            catchGameActive = false;
+            catchActive = false;
+            clearInterval(itemInterval);
             clearInterval(catchInterval);
-            clearInterval(catchSpawnInterval);
             switchScreen('menuScreen');
         }
 
-
-        // ================= JUEGO 2: TRES EN RAYA (TIC-TAC-TOE) =================
-        let tttBoard = ["", "", "", "", "", "", "", "", ""];
-        let tttActive = true;
-        let tttWinsPlayer = 0;
-        let tttWinsBot = 0;
-        let tttDrawsCount = 0;
-
-        const tttGrid = document.getElementById('tttGrid');
-        const tttStatus = document.getElementById('tttStatus');
+        // --- JUEGO 2: TRES EN RAYA ---
+        let tttBoard = ['', '', '', '', '', '', '', '', ''];
+        let tttGameActive = true;
+        let pWins = 0, bWins = 0, draws = 0;
 
         function initTTT() {
-            tttBoard = ["", "", "", "", "", "", "", "", ""];
-            tttActive = true;
-            tttStatus.innerText = "¡Tu turno (🍎)!";
-            tttStatus.style.color = "#ff4d6d";
-            
+            tttBoard = ['', '', '', '', '', '', '', '', ''];
+            tttGameActive = true;
+            document.getElementById('tttStatus').innerText = "¡Tu turno (🍎)!";
             const cells = document.querySelectorAll('.cell-ttt');
-            cells.forEach(cell => {
-                cell.innerText = "";
-                cell.style.backgroundColor = "#ffe5ec";
-                cell.onclick = handleCellClick;
+            cells.forEach((cell, idx) => {
+                cell.innerText = '';
+                cell.onclick = () => makeTTTMove(idx);
             });
         }
 
-        function handleCellClick(e) {
-            const index = parseInt(e.target.getAttribute('data-index'));
-            if (tttBoard[index] !== "" || !tttActive) return;
-            
-            tttBoard[index] = "🍎";
-            e.target.innerText = "🍎";
-            e.target.style.color = "#ff4d6d";
-            playSynthTone(523.25, 0.1, 'sine'); 
-            
-            if (checkTTTWin("🍎")) {
-                handleTTTGameOver("player");
-                return;
-            }
-            
-            if (tttBoard.every(cell => cell !== "")) {
-                handleTTTGameOver("draw");
-                return;
-            }
-            
-            tttActive = false;
-            tttStatus.innerText = "Gatito Bot pensando... 🐾";
-            tttStatus.style.color = "#ff758f";
-            
-            setTimeout(botPlay, 600); 
-        }
+        function makeTTTMove(idx) {
+            if (!tttGameActive || tttBoard[idx] !== '') return;
+            tttBoard[idx] = '🍎';
+            document.querySelectorAll('.cell-ttt')[idx].innerText = '🍎';
+            playSynthTone(400, 0.1, 'sine');
 
-        function botPlay() {
-            let move = getBestTTTMove();
-            tttBoard[move] = "🎀";
-            
-            const targetCell = document.querySelector(`.cell-ttt[data-index='${move}']`);
-            if (targetCell) {
-                targetCell.innerText = "🎀";
-            }
-            
-            playSynthTone(392.00, 0.12, 'triangle'); 
-            
-            if (checkTTTWin("🎀")) {
-                handleTTTGameOver("bot");
-                return;
-            }
-            
-            if (tttBoard.every(cell => cell !== "")) {
-                handleTTTGameOver("draw");
-                return;
-            }
-            
-            tttActive = true;
-            tttStatus.innerText = "¡Tu turno (🍎)!";
-            tttStatus.style.color = "#ff4d6d";
-        }
-
-        function getBestTTTMove() {
-            for(let i=0; i<9; i++) {
-                if (tttBoard[i] === "") {
-                    tttBoard[i] = "🎀";
-                    if (checkTTTWin("🎀")) { tttBoard[i] = ""; return i; }
-                    tttBoard[i] = "";
-                }
-            }
-            for(let i=0; i<9; i++) {
-                if (tttBoard[i] === "") {
-                    tttBoard[i] = "🍎";
-                    if (checkTTTWin("🍎")) { tttBoard[i] = ""; return i; }
-                    tttBoard[i] = "";
-                }
-            }
-            if (tttBoard[4] === "") return 4;
-            const corners = [0, 2, 6, 8].filter(i => tttBoard[i] === "");
-            if (corners.length > 0) return corners[Math.floor(Math.random() * corners.length)];
-            const sides = [1, 3, 5, 7].filter(i => tttBoard[i] === "");
-            return sides[Math.floor(Math.random() * sides.length)];
-        }
-
-        function checkTTTWin(symbol) {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-                [0, 4, 8], [2, 4, 6]             
-            ];
-            return winPatterns.some(pattern => {
-                return pattern.every(index => tttBoard[index] === symbol);
-            });
-        }
-
-        function handleTTTGameOver(winner) {
-            tttActive = false;
-            if (winner === "player") {
-                tttWinsPlayer++;
-                document.getElementById('playerWins').innerText = tttWinsPlayer;
-                tttStatus.innerText = "🎉 ¡Ganaste tú! ¡Bien jugado! 🏆";
-                tttStatus.style.color = "#ff3355";
-                playSynthTone(880.00, 0.15, 'sine');
-                setTimeout(() => playSynthTone(1046.50, 0.25, 'sine'), 100);
-                
+            if (checkTTTWinner('🍎')) {
+                document.getElementById('tttStatus').innerText = "🎉 ¡Ganaste! ¡Increíble! 🎉";
+                pWins++;
+                document.getElementById('playerWins').innerText = pWins;
+                tttGameActive = false;
                 achievements.t2 = true;
                 checkUnlockAchievements();
-                
-                highlightWinningCells("🍎");
-                
-                showCustomPopup("👑", "¡Victoria Magistral! 🌟", "¡Le ganaste la partida de Tres en Raya al astuto Gatito Bot!<br><br>Acabas de desbloquear el increíble <b>Cupón de Consentimiento (👑)</b> en el menú principal. ¡Es todo tuyo! 🥰✨");
-            } else if (winner === "bot") {
-                tttWinsBot++;
-                document.getElementById('botWins').innerText = tttWinsBot;
-                tttStatus.innerText = "Miauuu, ¡Ganó el Gatito Bot! 🎀🐱";
-                tttStatus.style.color = "#ff758f";
-                playSynthTone(220.00, 0.3, 'sawtooth');
-                highlightWinningCells("🎀");
-            } else {
-                tttDrawsCount++;
-                document.getElementById('tttDraws').innerText = tttDrawsCount;
-                tttStatus.innerText = "🤝 ¡Partida Empatada! ¡Muy reñido!";
-                tttStatus.style.color = "#777";
-                playSynthTone(440.00, 0.15, 'triangle');
+                return;
             }
-            
-            setTimeout(initTTT, 3000);
+
+            if (tttBoard.every(cell => cell !== '')) {
+                document.getElementById('tttStatus').innerText = "🤝 ¡Empate! 🤝";
+                draws++;
+                document.getElementById('tttDraws').innerText = draws;
+                tttGameActive = false;
+                return;
+            }
+
+            document.getElementById('tttStatus').innerText = "Turno del Gatito Bot (🎀)...";
+            setTimeout(botTTTMove, 500);
         }
 
-        function highlightWinningCells(symbol) {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8],
-                [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                [0, 4, 8], [2, 4, 6]
+        function botTTTMove() {
+            if (!tttGameActive) return;
+            let emptyCells = tttBoard.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+            if (emptyCells.length === 0) return;
+            let botChoice = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            tttBoard[botChoice] = '🎀';
+            document.querySelectorAll('.cell-ttt')[botChoice].innerText = '🎀';
+            playSynthTone(300, 0.1, 'triangle');
+
+            if (checkTTTWinner('🎀')) {
+                document.getElementById('tttStatus').innerText = "😿 ¡Gó ganó el Gatito Bot! Inténtalo otra vez.";
+                bWins++;
+                document.getElementById('botWins').innerText = bWins;
+                tttGameActive = false;
+                return;
+            }
+
+            if (tttBoard.every(cell => cell !== '')) {
+                document.getElementById('tttStatus').innerText = "🤝 ¡Empate! 🤝";
+                draws++;
+                document.getElementById('tttDraws').innerText = draws;
+                tttGameActive = false;
+                return;
+            }
+
+            document.getElementById('tttStatus').innerText = "¡Tu turno (🍎)!";
+        }
+
+        function checkTTTWinner(player) {
+            const wins = [
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
             ];
-            winPatterns.forEach(pattern => {
-                if (pattern.every(index => tttBoard[index] === symbol)) {
-                    pattern.forEach(index => {
-                        const cell = document.querySelector(`.cell-ttt[data-index='${index}']`);
-                        if (cell) cell.style.backgroundColor = "#ccffdd"; 
-                    });
-                }
-            });
+            return wins.some(comb => comb.every(idx => tttBoard[idx] === player));
         }
 
         function resetScoreBoard() {
-            tttWinsPlayer = 0;
-            tttWinsBot = 0;
-            tttDrawsCount = 0;
-            document.getElementById('playerWins').innerText = '0';
-            document.getElementById('botWins').innerText = '0';
-            document.getElementById('tttDraws').innerText = '0';
-            playSynthTone(261.63, 0.15, 'sine');
+            pWins = 0; bWins = 0; draws = 0;
+            document.getElementById('playerWins').innerText = pWins;
+            document.getElementById('botWins').innerText = bWins;
+            document.getElementById('tttDraws').innerText = draws;
             initTTT();
         }
 
-
-        // ================= JUEGO 3: MEMORIA (PAREJAS) =================
-        let memIcons = ['🐱', '🐱', '🎀', '🎀', '🌸', '🌸', '🍓', '🍓', '🧸', '🧸', '🍦', '🍦', '🍩', '🍩', '⭐', '⭐'];
-        let memFlippedCards = [];
-        let memMatchedCount = 0;
+        // --- JUEGO 3: MEMORIA ---
+        const memIcons = ['🐱', '🌸', '💖', '🍓', '🎀', '🧸'];
+        let memCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
         let memMovesCount = 0;
-        let memActive = true;
-        const memGrid = document.getElementById('memGrid');
 
         function initMemory() {
-            memFlippedCards = [];
-            memMatchedCount = 0;
+            const grid = document.getElementById('memGrid');
+            grid.innerHTML = '';
+            matchedPairs = 0;
             memMovesCount = 0;
-            memActive = true;
             document.getElementById('memMoves').innerText = memMovesCount;
-            
-            memIcons.sort(() => Math.random() - 0.5);
-            
-            memGrid.innerHTML = "";
-            for (let i = 0; i < 16; i++) {
-                const card = document.createElement('div');
-                card.className = 'card-mem';
-                card.setAttribute('data-index', i);
-                card.innerText = memIcons[i];
-                card.onclick = handleCardClick;
-                memGrid.appendChild(card);
-            }
-            playSynthTone(523.25, 0.1, 'sine');
+            flippedCards = [];
+
+            memCards = [...memIcons, ...memIcons]
+                .sort(() => Math.random() - 0.5)
+                .map((icon, id) => ({ id, icon, flipped: false, matched: false }));
+
+            memCards.forEach((card, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card-mem';
+                cardEl.dataset.index = index;
+                cardEl.onclick = () => flipMemoryCard(index, cardEl);
+                grid.appendChild(cardEl);
+            });
         }
 
-        function handleCardClick(e) {
-            const card = e.currentTarget;
-            if (!memActive || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-            
-            card.classList.add('flipped');
-            memFlippedCards.push(card);
-            playSynthTone(587.33, 0.08, 'sine'); 
-            
-            if (memFlippedCards.length === 2) {
+        function flipMemoryCard(index, el) {
+            let card = memCards[index];
+            if (card.flipped || card.matched || flippedCards.length >= 2) return;
+
+            card.flipped = true;
+            el.classList.add('flipped');
+            el.innerText = card.icon;
+            playSynthTone(500, 0.08, 'sine');
+            flippedCards.push({ index, card, el });
+
+            if (flippedCards.length === 2) {
                 memMovesCount++;
                 document.getElementById('memMoves').innerText = memMovesCount;
-                memActive = false; 
-                
-                checkMemMatch();
-            }
-        }
+                let [c1, c2] = flippedCards;
 
-        function checkMemMatch() {
-            const [card1, card2] = memFlippedCards;
-            const index1 = parseInt(card1.getAttribute('data-index'));
-            const index2 = parseInt(card2.getAttribute('data-index'));
-            
-            if (memIcons[index1] === memIcons[index2]) {
-                setTimeout(() => {
-                    card1.classList.add('matched');
-                    card2.classList.add('matched');
-                    memFlippedCards = [];
-                    memMatchedCount += 2;
-                    memActive = true;
-                    
-                    playSynthTone(783.99, 0.1, 'sine'); 
-                    setTimeout(() => playSynthTone(987.77, 0.15, 'sine'), 80); 
-                    
-                    if (memMatchedCount === 16) {
-                        handleMemoryGameWin();
+                if (c1.card.icon === c2.card.icon) {
+                    c1.card.matched = true;
+                    c2.card.matched = true;
+                    c1.el.classList.add('matched');
+                    c2.el.classList.add('matched');
+                    matchedPairs++;
+                    flippedCards = [];
+                    playSynthTone(700, 0.15, 'sine');
+
+                    if (matchedPairs === memIcons.length) {
+                        achievements.t3 = true;
+                        checkUnlockAchievements();
+                        showCustomPopup("🌸", "¡Memoria Completada! 🎉", "¡Excelente memoria! Has desbloqueado el cupón de comida 🍕.");
                     }
-                }, 400);
-            } else {
-                setTimeout(() => {
-                    card1.classList.remove('flipped');
-                    card2.classList.remove('flipped');
-                    memFlippedCards = [];
-                    memActive = true;
-                    playSynthTone(220.00, 0.15, 'sine'); 
-                }, 1000);
+                } else {
+                    setTimeout(() => {
+                        c1.card.flipped = false;
+                        c2.card.flipped = false;
+                        c1.el.classList.remove('flipped');
+                        c2.el.classList.remove('flipped');
+                        c1.el.innerText = '';
+                        c2.el.innerText = '';
+                        flippedCards = [];
+                    }, 800);
+                }
             }
         }
 
-        function handleMemoryGameWin() {
-            achievements.t3 = true;
-            checkUnlockAchievements();
-            
-            playSynthTone(523.25, 0.08, 'sine');
-            setTimeout(() => playSynthTone(659.25, 0.08, 'sine'), 80);
-            setTimeout(() => playSynthTone(783.99, 0.08, 'sine'), 160);
-            setTimeout(() => playSynthTone(1046.50, 0.3, 'sine'), 240);
-            
-            for(let i=0; i<20; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-10px';
-                confetti.style.backgroundColor = ['#ff758f', '#ffccd5', '#ff4d6d', '#fff'][Math.floor(Math.random() * 4)];
-                confetti.style.animationDuration = Math.random() * 2 + 1.5 + 's';
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 3000);
-            }
-            
-            showCustomPopup("🍕", "¡Desafío Completado! 🏆", `¡Encontraste todas las parejas en <b>${memMovesCount} movimientos</b>!<br><br>Se ha desbloqueado tu <b>Cupón de Comida (🍕)</b> en la pantalla de inicio para que pidas tu plato favorito. ¡Felicidades! 🎉🍰`);
-        }
-
-
-        // ================= JUEGO 4: LLUVIA DE REGALOS (DESEOS) =================
-        let giftGameActive = false;
-        let giftCount = 0;
-        let giftSecondsLeft = 15;
-        let giftSpawnInterval = null;
-        let giftTimerInterval = null;
-        let giftItems = [];
-        const giftCanvas = document.getElementById('giftCanvas');
-
-        const romanticPhrases = [
-            "Te mereces un día lleno de risas, tranquilidad y cero preocupaciones. ✨🌸",
-            "Tu sonrisa tiene el poder de iluminar hasta el día más gris. ¡No la apagues nunca! 😊💖",
-            "Haces que mi mundo se sientan infinitamente más suave, cálido y feliz. 🥰🧸",
-            "Eres el tesoro más brillante de mi rincón especial. ¡Gracias por existir! ⭐🎀",
-            "Que hoy te consientan muchísimo porque eres la reina indiscutible del universo. 👑🍧",
-            "Aunque tengamos días ocupados, siempre tienes tu asiento reservado en mi corazón. 🍕💕",
-            "Un vasito de amor, tres cucharadas de mimos y abrazos eternos para ti hoy. 🍦🌸",
-            "Te quiero libre, te quiero feliz y te quiero siempre con esa luz única que tienes. ✨❤️",
-            "Eres más dulce que cualquier pastelito de fresa del universo entero. 🍓🍰",
-            "Mi rincón favorito del mundo entero siempre será un rinconcito junto a ti. 🌸🫂",
-            "Eres un ser maravilloso y me haces inmensamente feliz con solo un mensajito tuyo. 📱💝",
-            "Que todo lo que sueñes hoy se convierta en una bonita realidad muy pronto. ⭐🎈"
-        ];
+        // --- JUEGO 4: LLUVIA DE REGALOS ---
+        let giftCountVal = 0, giftTimerVal = 15, giftIntervalId = null, giftSpawnId = null, giftActive = false;
+        const giftContainer = document.getElementById('giftCanvas');
 
         function initGift() {
-            giftGameActive = false;
-            giftCount = 0;
-            giftSecondsLeft = 15;
-            document.getElementById('giftCount').innerText = giftCount;
-            document.getElementById('giftTimer').innerText = giftSecondsLeft + "s";
-            
-            document.querySelectorAll('.falling-gift').forEach(g => g.remove());
-            giftItems = [];
-            
+            giftCountVal = 0; giftTimerVal = 15; giftActive = false;
+            document.getElementById('giftCount').innerText = giftCountVal;
+            document.getElementById('giftTimer').innerText = giftTimerVal + 's';
             document.getElementById('giftOverlay').style.display = 'flex';
+            document.querySelectorAll('.falling-gift').forEach(el => el.remove());
         }
 
         function startGiftGame() {
-            initAudio();
             document.getElementById('giftOverlay').style.display = 'none';
-            giftGameActive = true;
-            giftCount = 0;
-            giftSecondsLeft = 15;
-            document.getElementById('giftCount').innerText = giftCount;
-            document.getElementById('giftTimer').innerText = giftSecondsLeft + "s";
-            
-            giftSpawnInterval = setInterval(spawnGiftElement, 400);
-            
-            giftTimerInterval = setInterval(() => {
-                giftSecondsLeft--;
-                document.getElementById('giftTimer').innerText = giftSecondsLeft + "s";
-                
-                if (giftSecondsLeft <= 0) {
+            giftActive = true;
+            giftCountVal = 0; giftTimerVal = 15;
+            document.getElementById('giftCount').innerText = giftCountVal;
+            document.getElementById('giftTimer').innerText = giftTimerVal + 's';
+
+            if(giftSpawnId) clearInterval(giftSpawnId);
+            if(giftIntervalId) clearInterval(giftIntervalId);
+
+            giftSpawnId = setInterval(spawnGiftItem, 600);
+            giftIntervalId = setInterval(() => {
+                giftTimerVal--;
+                document.getElementById('giftTimer').innerText = giftTimerVal + 's';
+                if (giftTimerVal <= 0) {
                     endGiftGame();
                 }
             }, 1000);
-            
-            playSynthTone(523.25, 0.1, 'sine');
-            setTimeout(() => playSynthTone(659.25, 0.1, 'sine'), 100);
         }
 
-        function spawnGiftElement() {
-            if (!giftGameActive) return;
+        function spawnGiftItem() {
+            if (!giftActive) return;
             const gift = document.createElement('div');
             gift.className = 'falling-gift';
-            
-            const giftIcons = ['🎁', '🎈', '📦', '💝', '⭐'];
-            gift.innerText = giftIcons[Math.floor(Math.random() * giftIcons.length)];
-            
-            gift.style.left = Math.random() * 340 + 10 + 'px';
+            const giftsList = ['🎁', '🧸', '💖', '⭐', '🎈'];
+            gift.innerText = giftsList[Math.floor(Math.random() * giftsList.length)];
+            gift.style.left = Math.random() * (giftContainer.clientWidth - 45) + 'px';
             gift.style.top = '-40px';
-            
-            gift.onmousedown = (e) => collectGift(e);
-            gift.ontouchstart = (e) => {
-                collectGift(e);
-                e.preventDefault();
-            };
-            
-            giftCanvas.appendChild(gift);
-            
-            let y = -40;
-            let speed = Math.random() * 1.5 + 2.5;
-            
-            const fallLoop = setInterval(() => {
-                if (!giftGameActive) {
-                    clearInterval(fallLoop);
-                    gift.remove();
-                    return;
-                }
-                
-                y += speed;
-                gift.style.top = y + 'px';
-                
-                if (y > 490) {
-                    clearInterval(fallLoop);
-                    gift.remove();
-                }
-            }, 16);
-            
-            giftItems.push({ dom: gift, interval: fallLoop });
-        }
 
-        function collectGift(e) {
-            if (!giftGameActive) return;
-            giftCount++;
-            document.getElementById('giftCount').innerText = giftCount;
-            
-            playSynthTone(880.00, 0.08, 'sine', 0.12); 
-            
-            const target = e.currentTarget;
-            target.style.transform = 'scale(0)';
-            setTimeout(() => target.remove(), 100);
+            gift.onclick = () => {
+                if (!giftActive) return;
+                giftCountVal++;
+                document.getElementById('giftCount').innerText = giftCountVal;
+                playSynthTone(750, 0.08, 'sine');
+                gift.remove();
+            };
+
+            giftContainer.appendChild(gift);
+
+            let top = -40;
+            let fallSpeed = setInterval(() => {
+                if (!giftActive) { clearInterval(fallSpeed); gift.remove(); return; }
+                top += 3;
+                gift.style.top = top + 'px';
+                if (top > giftContainer.clientHeight) {
+                    clearInterval(fallSpeed);
+                    gift.remove();
+                }
+            }, 30);
         }
 
         function endGiftGame() {
-            giftGameActive = false;
-            clearInterval(giftSpawnInterval);
-            clearInterval(giftTimerInterval);
-            
-            giftItems.forEach(item => {
-                clearInterval(item.interval);
-                item.dom.remove();
-            });
-            giftItems = [];
-            
-            playSynthTone(523.25, 0.1, 'sine');
-            setTimeout(() => playSynthTone(783.99, 0.2, 'sine'), 100);
-            
-            setTimeout(() => {
-                goToOpeningGiftsScreen();
-            }, 800);
+            giftActive = false;
+            clearInterval(giftSpawnId);
+            clearInterval(giftIntervalId);
+            document.querySelectorAll('.falling-gift').forEach(el => el.remove());
+
+            const overlay = document.getElementById('giftOverlay');
+            overlay.style.display = 'flex';
+            if (giftCountVal >= 8) {
+                document.querySelector('#giftOverlay h3').innerText = "🎉 ¡Felicidades! 🎉";
+                document.querySelector('#giftOverlay p').innerHTML = `¡Atrapaste ${giftCountVal} regalos!<br>¡Eres súper rápida y hábil! ✨`;
+                playSynthTone(900, 0.3, 'sine');
+            } else {
+                document.querySelector('#giftOverlay h3').innerText = "⏱️ ¡Tiempo agotado! ⏱️";
+                document.querySelector('#giftOverlay p').innerHTML = `Atrapaste ${giftCountVal} regalos.<br>¡Inténtalo otra vez para llegar a 8!`;
+            }
         }
 
         function exitGift() {
-            giftGameActive = false;
-            clearInterval(giftSpawnInterval);
-            clearInterval(giftTimerInterval);
+            giftActive = false;
+            clearInterval(giftSpawnId);
+            clearInterval(giftIntervalId);
             switchScreen('menuScreen');
         }
 
+        // --- JUEGO 5: ATRAPA LAS GERBERAS (ARKANOID) ---
+        let gerberaGameInterval = null;
+        let gerbScore = 0, gerbLives = 3, gerbLevel = 1, gerbActive = false;
+        let canvas, ctx;
+        let paddle, ball, gerberaBlocks = [];
 
-        // ================= APERTURA DE REGALOS ACUMULADOS =================
-        let totalCollectedGifts = 0;
-        let giftIndexToOpen = 0;
-
-        function goToOpeningGiftsScreen() {
-            totalCollectedGifts = giftCount;
-            giftIndexToOpen = 0;
-            
-            document.getElementById('remainingGiftsCount').innerText = totalCollectedGifts;
-            document.getElementById('recapGiftIcon').innerText = "🎁";
-            document.getElementById('recapGiftText').innerHTML = "¡Haz clic en el regalo para abrirlo! ✨";
-            document.getElementById('recapTapHint').innerText = `Tienes ${totalCollectedGifts} regalito(s) esperándote. ¡Toca el regalo! 🌸`;
-            document.getElementById('exitOpeningScreenBtn').style.display = 'none';
-            
-            switchScreen('openingGiftsScreen');
+        function initGerberaGame() {
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            gerbScore = 0; gerbLives = 3; gerbLevel = 1; gerbActive = false;
+            document.getElementById('gerberaScore').innerText = gerbScore;
+            document.getElementById('gerberaLives').innerText = gerbLives;
+            document.getElementById('level-display').innerText = gerbLevel;
+            document.getElementById('startGerberaBtn').style.display = 'inline-block';
+            document.getElementById('pantalla-nivel').style.display = 'none';
+            document.getElementById('pantalla-victoria').style.display = 'none';
+            setupGerberaObjects();
+            drawGerberaScene();
         }
 
-        function openNextCollectedGift() {
-            if (totalCollectedGifts === 0) {
-                document.getElementById('recapGiftText').innerHTML = "<b>¡No recolectaste regalitos esta vez! 🌸</b><br><br>Pero no te preocupes, ¡te dejo una fresita virtual para endulzar tu día! 🍓✨";
-                document.getElementById('recapGiftIcon').innerText = "🍓";
-                document.getElementById('recapTapHint').innerText = "¡Vuelve a jugar para atrapar más regalos!";
-                document.getElementById('exitOpeningScreenBtn').style.display = 'inline-block';
-                playSynthTone(392.00, 0.2, 'sine');
-                return;
-            }
-
-            if (giftIndexToOpen < totalCollectedGifts) {
-                const phrase = romanticPhrases[Math.floor(Math.random() * romanticPhrases.length)];
-                const giftEmojis = ['🧁', '🎈', '💝', '🌸', '🧸', '🍪', '🍨', '🍿', '🍟', '🍭', '🧸', '🍓'];
-                const selectedIcon = giftEmojis[Math.floor(Math.random() * giftEmojis.length)];
-                
-                document.getElementById('recapGiftIcon').innerText = selectedIcon;
-                document.getElementById('recapGiftText').innerHTML = phrase;
-                
-                giftIndexToOpen++;
-                let remaining = totalCollectedGifts - giftIndexToOpen;
-                document.getElementById('remainingGiftsCount').innerText = remaining;
-                
-                playSynthTone(659.25, 0.12, 'sine'); 
-                setTimeout(() => playSynthTone(880.00, 0.15, 'sine'), 80);
-                
-                if (remaining > 0) {
-                    document.getElementById('recapTapHint').innerText = "¡Toca para abrir el siguiente! 🎁";
-                } else {
-                    document.getElementById('recapTapHint').innerText = "¡Abriste todos tus regalitos! 💖 Espero que te gustaran.";
-                    document.getElementById('exitOpeningScreenBtn').style.display = 'inline-block'; 
+        function setupGerberaObjects() {
+            paddle = { x: canvas.width / 2 - 40, y: canvas.height - 20, width: 80, height: 12, dx: 0 };
+            ball = { x: canvas.width / 2, y: canvas.height - 35, radius: 8, speed: 3 + gerbLevel, dx: 2, dy: -2 };
+            
+            gerberaBlocks = [];
+            let rows = 3, cols = 5;
+            let width = 50, height = 20, padding = 8, offsetTop = 30, offsetLeft = 20;
+            for(let r=0; r<rows; r++) {
+                for(let c=0; c<cols; c++) {
+                    gerberaBlocks.push({
+                        x: c * (width + padding) + offsetLeft,
+                        y: r * (height + padding) + offsetTop,
+                        width: width, height: height, status: 1
+                    });
                 }
-            } else {
-                playSynthTone(523.25, 0.1, 'sine');
             }
         }
 
+        function iniciarJuegoGerbera() {
+            document.getElementById('startGerberaBtn').style.display = 'none';
+            gerbActive = true;
+            if(gerberaGameInterval) clearInterval(gerberaGameInterval);
+            gerberaGameInterval = setInterval(updateGerberaGame, 1000 / 60);
+        }
 
-        // ================= PANTALLA ESPECIAL: ANTES DE IRTE =================
-        let letterPhraseIndex = 0;
-        const letterPhrases = [
-            "🧸 Hola... Primero que todo, quería darte las gracias por tomarte el tiempo de entrar a este rincón de internet que armé con mis manitas solo para ti... ✨",
-            "🌸 Sé que la vida diaria puede llegar a ser muy ruidosa, caótica y a veces cansar de verdad... pero quiero que recuerdes que eres una personita increíblemente fuerte, valiosa e importante.",
-            "💖 Siempre que te sientas un poquito agotada, cansada o abrumada por el estudio o el día a día... recuerda que este espacio es tuyo para desconectarte.",
-            "🍓 Te mereces todas las sonrisas del mundo entero, que te consientan muchísimo y que tus días estén cargados de dulzura, heladitos y apapachos.",
-            "💝 Nunca olvides lo genial y linda que eres. ¡Estoy infinitamente agradecido contigo por tu apoyo, tu cariño y por brillar tan lindo siempre! ✨",
-            "🧸 Así que ve con toda hoy, descansa bien y que pases un día maravilloso... ¡Te mando un besote y un abrazo asfixiante! 💖"
+        canvas = document.getElementById('gameCanvas');
+        if(canvas) {
+            canvas.addEventListener('mousemove', (e) => {
+                if(!gerbActive) return;
+                let rect = canvas.getBoundingClientRect();
+                let relativeX = e.clientX - rect.left;
+                paddle.x = relativeX - paddle.width / 2;
+                if(paddle.x < 0) paddle.x = 0;
+                if(paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if(!gerbActive) return;
+                let rect = canvas.getBoundingClientRect();
+                let relativeX = e.touches[0].clientX - rect.left;
+                paddle.x = relativeX - paddle.width / 2;
+                if(paddle.x < 0) paddle.x = 0;
+                if(paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+            });
+        }
+
+        function updateGerberaGame() {
+            if(!gerbActive) return;
+
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            if(ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx = -ball.dx;
+            if(ball.y - ball.radius < 0) ball.dy = -ball.dy;
+
+            if(
+                ball.y + ball.radius >= paddle.y &&
+                ball.x >= paddle.x &&
+                ball.x <= paddle.x + paddle.width
+            ) {
+                ball.dy = -ball.speed;
+                let hitPoint = ball.x - (paddle.x + paddle.width / 2);
+                ball.dx = hitPoint * 0.1;
+                playSynthTone(500, 0.05, 'sine');
+            }
+
+            if(ball.y + ball.radius > canvas.height) {
+                gerbLives--;
+                document.getElementById('gerberaLives').innerText = gerbLives;
+                playSynthTone(120, 0.2, 'sawtooth');
+                if(gerbLives <= 0) {
+                    gerbActive = false;
+                    clearInterval(gerberaGameInterval);
+                    document.getElementById('startGerberaBtn').style.display = 'inline-block';
+                    document.getElementById('startGerberaBtn').innerText = "Reintentar 🌸";
+                } else {
+                    ball.x = canvas.width / 2;
+                    ball.y = canvas.height - 35;
+                    ball.dx = 2; ball.dy = -2;
+                }
+            }
+
+            gerberaBlocks.forEach(b => {
+                if(b.status === 1) {
+                    if(
+                        ball.x > b.x && ball.x < b.x + b.width &&
+                        ball.y > b.y && ball.y < b.y + b.height
+                    ) {
+                        ball.dy = -ball.dy;
+                        b.status = 0;
+                        gerbScore += 10;
+                        document.getElementById('gerberaScore').innerText = gerbScore;
+                        playSynthTone(700, 0.08, 'sine');
+                    }
+                }
+            });
+
+            if(gerberaBlocks.every(b => b.status === 0)) {
+                gerbActive = false;
+                clearInterval(gerberaGameInterval);
+                if(gerbLevel < 2) {
+                    gerbLevel++;
+                    document.getElementById('level-display').innerText = gerbLevel;
+                    let overlay = document.getElementById('pantalla-nivel');
+                    overlay.style.display = 'flex';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        setupGerberaObjects();
+                        gerbActive = true;
+                        gerberaGameInterval = setInterval(updateGerberaGame, 1000 / 60);
+                    }, 1500);
+                } else {
+                    document.getElementById('pantalla-victoria').style.display = 'flex';
+                }
+            }
+
+            drawGerberaScene();
+        }
+
+        function drawGerberaScene() {
+            if(!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#ff4d6d';
+            ctx.beginPath();
+            ctx.roundRect(paddle.x, paddle.y, paddle.width, paddle.height, 6);
+            ctx.fill();
+
+            ctx.fillStyle = '#ff758f';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            gerberaBlocks.forEach(b => {
+                if(b.status === 1) {
+                    ctx.fillStyle = '#ff99bc';
+                    ctx.beginPath();
+                    ctx.roundRect(b.x, b.y, b.width, b.height, 4);
+                    ctx.fill();
+                    ctx.font = '14px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('🏵️', b.x + b.width/2, b.y + b.height/2);
+                }
+            });
+        }
+
+        function exitGerberaGame() {
+            gerbActive = false;
+            clearInterval(gerberaGameInterval);
+            switchScreen('menuScreen');
+        }
+
+        // --- JUEGO DE LAS AMAPOLAS ---
+        const poppyPhrases = [
+            "Te quiere muchísimo ❤️",
+            "Te piensa todo el día 💭",
+            "Eres su persona favorita ✨",
+            "Te adora con el alma 🌸",
+            "Sueña con abrazarte 🧸",
+            "Te ama infinito 💕"
         ];
 
-        const letterIcons = ['🧸', '🌸', '💖', '🍓', '💝', '✨'];
+        function initPoppyGame() {
+            const container = document.getElementById('petalsGridContainer');
+            container.innerHTML = '';
+            document.getElementById('poppy-result').innerText = '';
+
+            poppyPhrases.forEach((phrase, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'petal';
+                btn.innerText = `Pétalo ${idx + 1}`;
+                btn.onclick = () => {
+                    btn.classList.add('removed');
+                    document.getElementById('poppy-result').innerText = phrase;
+                    playSynthTone(600, 0.1, 'sine');
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // --- CARTA Y SOBRE ESPECIAL ---
+        let specialStep = 0;
+        const specialPhrases = [
+            { icon: "🧸", text: "Has recorrido cada rincón de este pequeño espacio que armé con todo mi cariño. 💖" },
+            { icon: "🌸", text: "Quería recordarte lo especial que eres y lo muchísimo que iluminas mis días con solo sonreír. ✨" },
+            { icon: "💌", text: "No olvides que cada juego, cada detalle y cada palabra aquí escrita llevan un pedacito de mi corazón para ti. 🥰" }
+        ];
+
+        function openLetterEnvelope() {
+            const env = document.getElementById('mailEnvelope');
+            env.classList.add('open');
+            playSynthTone(650, 0.2, 'sine');
+            setTimeout(() => {
+                env.style.display = 'none';
+                document.getElementById('letterBox').style.display = 'flex';
+                nextSpecialPhrase();
+            }, 400);
+        }
+
+        function nextSpecialPhrase() {
+            if (specialStep < specialPhrases.length) {
+                let data = specialPhrases[specialStep];
+                document.getElementById('specialIcon').innerText = data.icon;
+                document.getElementById('specialText').innerText = data.text;
+                specialStep++;
+                playSynthTone(550, 0.1, 'sine');
+            } else {
+                specialStep = 0;
+                nextSpecialPhrase();
+            }
+        }
 
         function initSpecial() {
-            letterPhraseIndex = 0;
+            specialStep = 0;
             document.getElementById('mailEnvelope').classList.remove('open');
             document.getElementById('mailEnvelope').style.display = 'flex';
             document.getElementById('letterBox').style.display = 'none';
         }
-
-        function openLetterEnvelope() {
-            initAudio();
-            document.getElementById('mailEnvelope').classList.add('open');
-            playSynthTone(523.25, 0.1, 'sine');
-            setTimeout(() => playSynthTone(659.25, 0.1, 'sine'), 100);
-            setTimeout(() => playSynthTone(783.99, 0.2, 'sine'), 200);
-            
-            setTimeout(() => {
-                document.getElementById('mailEnvelope').style.display = 'none';
-                document.getElementById('letterBox').style.display = 'flex';
-                document.getElementById('specialIcon').innerText = letterIcons[0];
-                document.getElementById('specialText').innerText = letterPhrases[0];
-            }, 600);
-        }
-
-        function nextSpecialPhrase() {
-            letterPhraseIndex++;
-            if (letterPhraseIndex < letterPhrases.length) {
-                document.getElementById('specialIcon').innerText = letterIcons[letterPhraseIndex];
-                document.getElementById('specialText').innerText = letterPhrases[letterPhraseIndex];
-                playSynthTone(587.33, 0.1, 'sine');
-            } else {
-                letterPhraseIndex = 0;
-                document.getElementById('specialIcon').innerText = letterIcons[0];
-                document.getElementById('specialText').innerText = letterPhrases[0];
-                playSynthTone(392.00, 0.15, 'sine');
-            }
-        }
     </script>
-</body>
-</html>
 </body>
 </html>
